@@ -62,11 +62,11 @@ export function SubscriptionForm({
   const selectedPlan = plans?.find((p) => p.id === selectedPlanId);
 
   // Calculate default end date based on selected plan
-  const calculateEndDate = (startDate: string, durationMonths: number) => {
+  const calculateEndDate = (startDate: string, durationMonths: number): string => {
     const start = new Date(startDate);
     const end = new Date(start);
     end.setMonth(end.getMonth() + durationMonths);
-    return end.toISOString().split('T')[0];
+    return end.toISOString().split('T')[0]!;
   };
 
   const {
@@ -113,7 +113,7 @@ export function SubscriptionForm({
         const createData = data as SubscriptionCreateData;
         const endDate: string = selectedPlan
           ? calculateEndDate(createData.start_date, selectedPlan.duration_months)
-          : new Date().toISOString().split('T')[0];
+          : new Date().toISOString().split('T')[0]!;
 
         const result = await createSubscription({
           customer_id: createData.customer_id,

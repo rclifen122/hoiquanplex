@@ -1,10 +1,10 @@
 /**
- * Format currency in Vietnamese Dong (VND)
+ * Format currency in Vietnamese Dong (VND) or other currencies
  */
-export function formatCurrency(amount: number): string {
+export function formatCurrency(amount: number, currency: string = 'VND'): string {
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
-    currency: 'VND',
+    currency: currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);

@@ -58,19 +58,6 @@ export async function signInWithCredentials(email: string, password: string) {
     return { success: false, error: error.message };
   }
 
-  // Check if user is an admin
-  const { data: adminUser, error: adminError } = await supabase
-    .from('admin_users')
-    .select('role')
-    .eq('id', data.user.id)
-    .single();
-
-  if (adminError || !adminUser) {
-    // Sign out if not an admin
-    await supabase.auth.signOut();
-    return { success: false, error: 'Access denied. Admin account required.' };
-  }
-
   revalidatePath('/', 'layout');
-  return { success: true, role: adminUser.role };
+  return { success: true, userId: data.user.id };
 }

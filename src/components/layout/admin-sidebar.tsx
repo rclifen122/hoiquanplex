@@ -9,11 +9,13 @@ import {
   FileText,
   Mail,
   Settings,
-  PackagePlus
+  PackagePlus,
+  BarChart3
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Customers', href: '/admin/customers', icon: Users },
   { name: 'Subscriptions', href: '/admin/subscriptions', icon: PackagePlus },
   { name: 'Payments', href: '/admin/payments', icon: CreditCard },

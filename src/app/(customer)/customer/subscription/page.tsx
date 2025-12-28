@@ -67,7 +67,7 @@ export default async function CustomerSubscriptionPage() {
           /* Active Subscription Details */
           <div className="space-y-6">
             {/* Subscription Overview Card */}
-            <div className={`rounded-lg border-2 p-8 ${tierColors[subscription.tier]}`}>
+            <div className={`rounded-lg border-2 p-8 ${tierColors[subscription.tier as keyof typeof tierColors]}`}>
               <div className="flex items-start justify-between">
                 <div>
                   <div className="mb-2 flex items-center gap-3">
@@ -77,7 +77,7 @@ export default async function CustomerSubscriptionPage() {
                     </span>
                   </div>
                   <p className="text-lg font-medium">
-                    Gói {tierLabels[subscription.tier]}
+                    Gói {tierLabels[subscription.tier as keyof typeof tierLabels]}
                   </p>
                   {subscription.plan.description && (
                     <p className="mt-2 text-sm opacity-90">

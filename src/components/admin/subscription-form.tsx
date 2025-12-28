@@ -185,7 +185,7 @@ export function SubscriptionForm({
                   </option>
                 ))}
               </select>
-              {errors.customer_id && (
+              {(errors as { customer_id?: { message?: string } }).customer_id && (
                 <p className="mt-1 text-sm text-red-600">
                   {(errors as { customer_id?: { message?: string } }).customer_id?.message}
                 </p>
@@ -209,7 +209,7 @@ export function SubscriptionForm({
                   </option>
                 ))}
               </select>
-              {errors.plan_id && (
+              {(errors as { plan_id?: { message?: string } }).plan_id && (
                 <p className="mt-1 text-sm text-red-600">
                   {(errors as { plan_id?: { message?: string } }).plan_id?.message}
                 </p>
@@ -226,7 +226,7 @@ export function SubscriptionForm({
                 id="start_date"
                 className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
-              {errors.start_date && (
+              {(errors as { start_date?: { message?: string } }).start_date && (
                 <p className="mt-1 text-sm text-red-600">
                   {(errors as { start_date?: { message?: string } }).start_date?.message}
                 </p>
@@ -282,7 +282,7 @@ export function SubscriptionForm({
                 id="end_date"
                 className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
-              {errors.end_date && (
+              {(errors as { end_date?: { message?: string } }).end_date && (
                 <p className="mt-1 text-sm text-red-600">
                   {(errors as { end_date?: { message?: string } }).end_date?.message}
                 </p>
@@ -303,7 +303,7 @@ export function SubscriptionForm({
                 <option value="cancelled">Cancelled</option>
                 <option value="expired">Expired</option>
               </select>
-              {errors.status && (
+              {(errors as { status?: { message?: string } }).status && (
                 <p className="mt-1 text-sm text-red-600">
                   {(errors as { status?: { message?: string } }).status?.message}
                 </p>

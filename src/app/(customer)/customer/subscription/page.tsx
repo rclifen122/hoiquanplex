@@ -141,8 +141,8 @@ export default async function CustomerSubscriptionPage() {
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Gói hiện tại</dt>
                     <dd className="mt-1">
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tierColors[subscription.tier]}`}>
-                        {tierLabels[subscription.tier]}
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tierColors[subscription.tier as keyof typeof tierColors]}`}>
+                        {tierLabels[subscription.tier as keyof typeof tierLabels]}
                       </span>
                     </dd>
                   </div>

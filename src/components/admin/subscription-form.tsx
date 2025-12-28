@@ -113,7 +113,7 @@ export function SubscriptionForm({
         const createData = data as SubscriptionCreateData;
         const endDate = selectedPlan
           ? calculateEndDate(createData.start_date, selectedPlan.duration_months)
-          : new Date().toISOString();
+          : new Date().toISOString().split('T')[0];
 
         const result = await createSubscription({
           customer_id: createData.customer_id,

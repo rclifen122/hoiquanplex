@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -11,43 +13,66 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="rounded-lg bg-green-50 p-4">
-            <h2 className="mb-2 font-semibold text-green-900">
-              ✅ Deployment Successful
-            </h2>
-            <p className="text-sm text-green-700">
-              Your HoiQuanPlex CRM application has been deployed successfully!
-            </p>
+        <div className="space-y-6">
+          {/* Navigation Cards */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Admin Login */}
+            <Link
+              href="/admin/login"
+              className="group rounded-lg border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 p-6 transition-all hover:border-gray-400 hover:shadow-lg"
+            >
+              <div className="mb-2 text-3xl">🔐</div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-900 group-hover:text-blue-600">
+                Admin Portal
+              </h3>
+              <p className="text-sm text-gray-600">
+                Manage customers, subscriptions, and analytics
+              </p>
+            </Link>
+
+            {/* Customer Login */}
+            <Link
+              href="/customer/login"
+              className="group rounded-lg border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100 p-6 transition-all hover:border-blue-400 hover:shadow-lg"
+            >
+              <div className="mb-2 text-3xl">👤</div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-900 group-hover:text-blue-600">
+                Customer Login
+              </h3>
+              <p className="text-sm text-gray-600">
+                Access your account and subscription
+              </p>
+            </Link>
           </div>
 
-          <div className="rounded-lg bg-blue-50 p-4">
-            <h3 className="mb-2 font-semibold text-blue-900">
-              📦 Project Setup Complete
-            </h3>
-            <ul className="space-y-1 text-sm text-blue-700">
-              <li>• Next.js 14 + TypeScript</li>
-              <li>• Supabase Database</li>
-              <li>• Tailwind CSS</li>
-              <li>• Ready for feature development</li>
-            </ul>
+          {/* Registration */}
+          <div className="rounded-lg border-2 border-green-200 bg-gradient-to-br from-green-50 to-green-100 p-6">
+            <div className="mb-4 text-center">
+              <div className="mb-2 text-3xl">📝</div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-900">
+                New Customer?
+              </h3>
+              <p className="text-sm text-gray-600">
+                Register for a new account to get started
+              </p>
+            </div>
+            <Link
+              href="/register/form-a"
+              className="block w-full rounded-lg bg-green-600 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-green-500"
+            >
+              Register Now
+            </Link>
           </div>
 
-          <div className="rounded-lg bg-amber-50 p-4">
-            <h3 className="mb-2 font-semibold text-amber-900">
-              🚧 Next Steps
-            </h3>
-            <ul className="space-y-1 text-sm text-amber-700">
-              <li>• Configure environment variables</li>
-              <li>• Set up Supabase database</li>
-              <li>• Implement admin authentication</li>
-              <li>• Build customer management features</li>
-            </ul>
-          </div>
-
-          <div className="mt-6 text-center text-xs text-gray-500">
-            <p>Domain: hoiquanplex.site</p>
-            <p className="mt-1">Version 1.0.0 - Setup Phase</p>
+          {/* System Status */}
+          <div className="rounded-lg bg-gray-50 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                <span className="text-sm font-medium text-gray-700">System Status: Online</span>
+              </div>
+              <span className="text-xs text-gray-500">v1.0.0</span>
+            </div>
           </div>
         </div>
       </div>

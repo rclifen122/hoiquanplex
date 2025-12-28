@@ -1,9 +1,8 @@
 import { CustomerDashboardLayout } from '@/components/layout/customer-dashboard-layout';
-import { getCustomer, getActiveSubscription } from '@/lib/auth/customer-auth-helpers';
+import { getActiveSubscription } from '@/lib/auth/customer-auth-helpers';
 import { formatCurrency, formatDate } from '@/lib/utils/format';
 
 export default async function CustomerSubscriptionPage() {
-  const customer = await getCustomer();
   const subscription = await getActiveSubscription();
 
   const tierLabels = {

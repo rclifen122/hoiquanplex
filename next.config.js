@@ -76,11 +76,8 @@ const nextConfig = {
   // Redirects
   async redirects() {
     return [
-      {
-        source: '/',
-        destination: '/login',
-        permanent: false,
-      },
+      // Redirects will be added as features are built
+      // Example: { source: '/old-path', destination: '/new-path', permanent: false }
     ];
   },
 

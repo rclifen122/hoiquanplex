@@ -35,7 +35,7 @@ export async function createSubscription(data: {
     if (!validationResult.success) {
       return {
         success: false,
-        error: validationResult.error.errors[0].message,
+        error: validationResult.error.errors[0]?.message || 'Validation error',
       };
     }
 

@@ -57,7 +57,12 @@ const config: Config = {
           plus: 'hsl(var(--tier-plus))',
           pro: 'hsl(var(--tier-pro))',
         },
-        // Custom status colors
+        // Custom Plex colors
+        plex: {
+          yellow: '#e5a00d',
+          dark: '#121212',
+          card: '#1f1f1f',
+        },
         status: {
           pending: 'hsl(var(--status-pending))',
           active: 'hsl(var(--status-active))',

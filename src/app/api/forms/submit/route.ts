@@ -163,6 +163,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Send Payment Pending Email
+    try {
+      const { render } = await import('@react-email/components');
+      const { PaymentPendingEmail } = await import('@/lib/email/templates/payment-pending-email');
+      const { sendEmail } = await import('@/lib/email/send-email');
+      const { formatCurrency } = await import('@/lib/utils/format');
+
+      const emailHtml = await render(
+        PaymentPendingEmail({
+          customerName: customer.full_name,
+          paymentCode: paymentCode,
+          amount: formatCurrency(plan.price),
+          planName: plan.name,
+        })
+      );
+
+      await sendEmail({
+        to: customer.email,
+        subject: `Xác nhận đăng ký ${plan.name} - Mã thanh toán ${paymentCode}`,
+        html: emailHtml,
+        emailType: 'payment_pending',
+        customerId: customer.id,
+        templateName: 'payment-pending',
+      });
+    } catch (emailError) {
+      console.error('Failed to send payment pending email:', emailError);
+      // Don't fail the request, just log error
+    }
+
     return NextResponse.json({
       success: true,
       customer_id: customer.id,

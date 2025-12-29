@@ -7,12 +7,18 @@ export const metadata = {
   description: 'Đăng nhập vào tài khoản khách hàng của bạn',
 };
 
-export default async function CustomerLoginPage() {
+export default async function CustomerLoginPage({
+  searchParams,
+}: {
+  searchParams: { registered?: string };
+}) {
   // If already logged in as customer, redirect to dashboard
   const customer = await getCustomer();
   if (customer) {
     redirect('/customer');
   }
+
+  const showRegisteredMessage = searchParams.registered === 'true';
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -24,6 +30,14 @@ export default async function CustomerLoginPage() {
           </p>
         </div>
 
+        {showRegisteredMessage && (
+          <div className="mt-6 rounded-lg bg-green-50 p-4 text-center">
+            <p className="text-sm font-medium text-green-800">
+              ✓ Đăng ký thành công! Vui lòng đăng nhập với tài khoản của bạn.
+            </p>
+          </div>
+        )}
+
         <div className="mt-8 rounded-xl bg-white p-8 shadow-lg">
           <CustomerLoginForm />
         </div>
@@ -32,7 +46,7 @@ export default async function CustomerLoginPage() {
           <p className="text-sm text-gray-600">
             Chưa có tài khoản?{' '}
             <a
-              href="/register/form-a"
+              href="/customer/register"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
               Đăng ký ngay

@@ -35,17 +35,22 @@
     --status-active: 142.1 76.2% 36.3%;
     --status-expired: 0 84.2% 60.2%;
     --status-cancelled: 0 0% 60%;
+
+    /* Plex Specific Colors (HSL) */
+    --plex-yellow: 41 90% 47%;
+    --plex-dark: 0 0% 7%;
+    --plex-card: 0 0% 12%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 0 0% 7%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 0 0% 12%;
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+    --popover: 0 0% 12%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 41 90% 47%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -54,9 +59,9 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 41 90% 47%;
 
     /* Dark mode tier colors */
     --tier-free: 0 0% 40%;

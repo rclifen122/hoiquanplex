@@ -13,7 +13,7 @@ export default function HomePage() {
         'Hỗ trợ qua email',
       ],
       cta: 'Đăng ký miễn phí',
-      href: '/register/form-a',
+      href: '/customer/register',
       highlighted: false,
     },
     {
@@ -75,7 +75,7 @@ export default function HomePage() {
                 Đăng nhập
               </Link>
               <Link
-                href="/register/form-a"
+                href="/customer/register"
                 className="rounded-md bg-plex-yellow px-5 py-2 text-sm font-bold text-black shadow-lg shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-105 transition-all"
               >
                 Đăng ký ngay
@@ -103,7 +103,7 @@ export default function HomePage() {
                 </p>
                 <div className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                   <Link
-                    href="/register/form-a"
+                    href="/customer/register"
                     className="rounded-md bg-plex-yellow px-8 py-4 text-lg font-bold text-black shadow-xl shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-105 transition-all flex items-center gap-2"
                   >
                     Bắt đầu xem <Play className="fill-black w-4 h-4" />
@@ -301,7 +301,7 @@ export default function HomePage() {
                   <p className="mt-2 text-black/70 font-bold">Gia nhập cộng đồng xem phim lớn nhất Việt Nam ngay hôm nay.</p>
                 </div>
                 <Link
-                  href="/register/form-a"
+                  href="/customer/register"
                   className="px-10 py-5 bg-black text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl"
                 >
                   Đăng ký miễn phí
@@ -328,7 +328,7 @@ export default function HomePage() {
               <h4 className="text-sm font-black text-white uppercase tracking-widest mb-6">Sản phẩm</h4>
               <ul className="space-y-4">
                 <li><Link href="#plans" className="text-gray-500 hover:text-plex-yellow text-sm transition-colors lowercase">Gói dịch vụ</Link></li>
-                <li><Link href="/register/form-a" className="text-gray-500 hover:text-plex-yellow text-sm transition-colors lowercase">Đăng ký mới</Link></li>
+                <li><Link href="/customer/register" className="text-gray-500 hover:text-plex-yellow text-sm transition-colors lowercase">Đăng ký mới</Link></li>
               </ul>
             </div>
             <div>

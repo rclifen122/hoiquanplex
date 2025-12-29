@@ -57,6 +57,7 @@ export async function POST(request: NextRequest) {
         });
 
         if (authError) {
+            // eslint-disable-next-line no-console
             console.error('Auth user creation error:', authError);
             return NextResponse.json(
                 { error: 'Không thể tạo tài khoản. ' + (authError.message || '') },
@@ -81,7 +82,9 @@ export async function POST(request: NextRequest) {
             .single();
 
         if (customerError) {
+            // eslint-disable-next-line no-console
             console.error('Customer creation error:', customerError);
+            // eslint-disable-next-line no-console
             console.error('Customer creation error details:', JSON.stringify(customerError, null, 2));
             // Clean up auth user if customer creation fails
             await supabase.auth.admin.deleteUser(authUser.user.id);
@@ -117,6 +120,7 @@ export async function POST(request: NextRequest) {
                 templateName: 'welcome',
             });
         } catch (emailError) {
+            // eslint-disable-next-line no-console
             console.error('Failed to send welcome email:', emailError);
             // Don't fail registration if email fails
         }
@@ -126,6 +130,7 @@ export async function POST(request: NextRequest) {
             message: 'Đăng ký thành công! Vui lòng đăng nhập.',
         });
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Registration error:', error);
         return NextResponse.json(
             { error: 'Lỗi hệ thống. Vui lòng thử lại sau.' },

@@ -28,7 +28,11 @@ export async function getAdminUser() {
     return null;
   }
 
-  const supabase = await createServerClient();
+  // Use admin client to bypass RLS when checking for admin status
+  // This avoids circular dependency issues with RLS policies
+  const { createAdminClient } = await import('@/lib/supabase/admin');
+  const supabase = createAdminClient();
+
   const { data: adminUser, error } = await supabase
     .from('admin_users')
     .select('*')

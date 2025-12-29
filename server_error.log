@@ -1,0 +1,37 @@
+(node:32240) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (130kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:15482:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async _handleRequest (webpack-internal:///(action-browser)/./node_modules/@supabase/auth-js/dist/module/lib/fetch.js:106:18)
+    at async _request (webpack-internal:///(action-browser)/./node_modules/@supabase/auth-js/dist/module/lib/fetch.js:96:18)
+    at async SupabaseAuthClient.signInWithPassword (webpack-internal:///(action-browser)/./node_modules/@supabase/auth-js/dist/module/GoTrueClient.js:447:23)
+    at async signInWithCredentials (webpack-internal:///(action-browser)/./src/lib/auth/actions.ts:56:29)
+    at async C:\Tool\code\HQPSaaS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:40:286
+    at async rk (C:\Tool\code\HQPSaaS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:38:8297)
+    at async ne (C:\Tool\code\HQPSaaS\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:42:1256)
+    at async doRender (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:1427:30)
+    at async cacheEntry.responseCache.get.routeKind (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:1588:28)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:1496:28)
+    at async DevServer.renderPageComponent (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\base-server.js:818:17)
+    at async C:\Tool\code\HQPSaaS\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Tool\code\HQPSaaS\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Tool\code\HQPSaaS\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  [cause]: Error: getaddrinfo ENOTFOUND dummy.supabase.co
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'dummy.supabase.co'
+  }
+}
+^C

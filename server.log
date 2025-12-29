@@ -1,0 +1,72 @@
+
+> hoiquanplex-crm@1.0.0 dev
+> next dev -p 3001
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1704ms
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 736ms (123 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 4.1s (519 modules)
+ ✓ Compiled in 611ms (258 modules)
+ GET / 200 in 4791ms
+ ✓ Compiled in 60ms (244 modules)
+ ○ Compiling /customer/login ...
+ ✓ Compiled /customer/login in 1185ms (713 modules)
+ GET /customer/login 307 in 1726ms
+ GET /customer/login 307 in 113ms
+ GET /customer/login 307 in 92ms
+ GET /customer/login 307 in 85ms
+ GET /customer/login 307 in 104ms
+ GET /customer/login 307 in 99ms
+ GET /customer/login 307 in 93ms
+ GET /customer/login 307 in 89ms
+ GET /customer/login 307 in 112ms
+ GET /customer/login 307 in 109ms
+ GET /customer/login 307 in 94ms
+ GET /customer/login 307 in 122ms
+ GET /customer/login 307 in 115ms
+ GET /customer/login 307 in 134ms
+ GET /customer/login 307 in 121ms
+ GET /customer/login 307 in 89ms
+ GET /customer/login 307 in 79ms
+ GET /customer/login 307 in 96ms
+ GET /customer/login 307 in 96ms
+ GET /customer/login 307 in 106ms
+ GET /customer/login 307 in 85ms
+ GET /customer/login 307 in 85ms
+ GET /customer/login 307 in 105ms
+ GET /customer/login 307 in 71ms
+ GET /customer/login 307 in 88ms
+ GET /customer/login 307 in 108ms
+ GET /customer/login 307 in 81ms
+ GET /customer/login 307 in 110ms
+ GET /customer/login 307 in 101ms
+ GET /customer/login 307 in 90ms
+ GET /customer/login 307 in 119ms
+ GET /customer/login 307 in 93ms
+ GET /customer/login 307 in 126ms
+ GET /customer/login 200 in 21ms
+ GET / 200 in 105ms
+ ✓ Compiled in 252ms (280 modules)
+ ✓ Compiled in 221ms (280 modules)
+ ✓ Compiled /customer/login in 159ms (415 modules)
+ GET /customer/login 200 in 121ms
+ ✓ Compiled / in 122ms (446 modules)
+ GET / 200 in 333ms
+ GET /customer/login 200 in 57ms
+ POST /customer/login 200 in 123ms
+ ✓ Compiled /register/form-a in 351ms (733 modules)
+ GET /register/form-a 200 in 541ms
+ GET / 200 in 76ms
+ GET / 200 in 55ms
+ GET / 200 in 81ms
+ ✓ Compiled in 271ms (282 modules)
+ ✓ Compiled in 196ms (282 modules)
+ ✓ Compiled in 105ms (282 modules)
+ ✓ Compiled in 150ms (282 modules)
+ ✓ Compiled in 157ms (282 modules)

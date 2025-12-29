@@ -22,7 +22,6 @@ interface SendEmailParams {
     subject: string;
     template: React.ReactElement;
     type: EmailType;
-    metadata?: Record<string, any>;
     userId?: string; // Auth user ID (optional)
     customerId?: string; // Customer ID (optional)
 }
@@ -32,7 +31,7 @@ export class EmailService {
      * Send an email and log it to the database
      */
     static async send(params: SendEmailParams) {
-        const { to, subject, template, type, metadata, userId, customerId } = params;
+        const { to, subject, template, type, userId, customerId } = params;
 
         try {
             if (!RESEND_API_KEY) {
@@ -83,7 +82,7 @@ export class EmailService {
 
             return { success: true, data };
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Unexpected error in EmailService:', err);
             // Log critical failure
             await this.logEmail({
@@ -94,7 +93,7 @@ export class EmailService {
                 type,
                 status: 'failed',
                 providerId: null,
-                error: err.message || 'Unknown error',
+                error: err instanceof Error ? err.message : 'Unknown error',
             });
             return { success: false, error: err };
         }

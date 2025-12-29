@@ -9,7 +9,6 @@ export default async function AdminLayout({
   const adminUser = await getAdminUser();
 
   // Redirect to login if not authenticated as admin
-  // The login page itself will handle the redirect if user is already authenticated
   if (!adminUser) {
     redirect('/admin/login');
   }

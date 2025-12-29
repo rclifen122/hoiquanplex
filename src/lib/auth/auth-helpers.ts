@@ -69,26 +69,3 @@ export async function hasAdminRole(
   return userRoleLevel >= requiredRoleLevel;
 }
 
-/**
- * Get the current customer (for customer portal)
- */
-export async function getCustomer() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return null;
-  }
-
-  const supabase = await createServerClient();
-  const { data: customer, error } = await supabase
-    .from('customers')
-    .select('*')
-    .eq('auth_user_id', user.id)
-    .single();
-
-  if (error || !customer) {
-    return null;
-  }
-
-  return customer;
-}

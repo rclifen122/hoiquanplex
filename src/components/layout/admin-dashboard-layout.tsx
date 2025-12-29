@@ -1,4 +1,5 @@
 import { getAdminUser } from '@/lib/auth/auth-helpers';
+import { redirect } from 'next/navigation';
 import { AdminSidebar } from './admin-sidebar';
 import { AdminHeader } from './admin-header';
 
@@ -10,7 +11,7 @@ export async function AdminDashboardLayout({
   const adminUser = await getAdminUser();
 
   if (!adminUser) {
-    return null; // This should never happen due to layout.tsx protection
+    redirect('/admin/login');
   }
 
   return (

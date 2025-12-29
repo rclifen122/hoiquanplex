@@ -1,27 +1,13 @@
 import { redirect } from 'next/navigation';
 import { getAdminUser } from '@/lib/auth/auth-helpers';
-import { headers } from 'next/headers';
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Get current path to avoid redirect loops
-  const headersList = headers();
-  const pathname = headersList.get('x-pathname') || '';
-
-  // Don't check auth on login page (prevent redirect loop)
-  if (pathname.includes('/admin/login')) {
-    return <>{children}</>;
-  }
-
-  const adminUser = await getAdminUser();
-
-  // Redirect to login if not authenticated as admin
-  if (!adminUser) {
-    redirect('/admin/login');
-  }
-
+  // NOTE: Auth check removed from layout to prevent redirect loops
+  // Each protected page should call getAdminUser() and redirect if needed
+  // The login page at /admin/login is intentionally public
   return <>{children}</>;
 }

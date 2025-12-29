@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
                 phone: phone || null,
                 facebook_profile: facebook_profile || null,
                 tier: 'free', // Default to free tier
-                registration_source: 'web',
+                registration_source: 'form_a',
                 status: 'active',
             })
             .select()

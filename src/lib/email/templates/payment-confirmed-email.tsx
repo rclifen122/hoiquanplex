@@ -8,6 +8,10 @@ interface PaymentConfirmedEmailProps {
   paymentCode: string;
   subscriptionEndDate: string;
   dashboardUrl?: string;
+  credentials?: {
+    email: string;
+    password: string;
+  };
 }
 
 export function PaymentConfirmedEmail({
@@ -17,6 +21,7 @@ export function PaymentConfirmedEmail({
   paymentCode,
   subscriptionEndDate,
   dashboardUrl,
+  credentials,
 }: PaymentConfirmedEmailProps) {
   const formattedAmount = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -37,6 +42,41 @@ export function PaymentConfirmedEmail({
         Thanh toán của bạn đã được xác nhận. Cảm ơn bạn đã tin tưởng sử dụng dịch
         vụ của chúng tôi!
       </Text>
+
+      {/* Account Credentials - Only show if provided */}
+      {credentials && (
+        <Section style={{ ...styles.card, backgroundColor: '#eff6ff', border: '1px solid #bfdbfe' }}>
+          <Text style={styles.cardTitle}>🔑 Thông tin đăng nhập</Text>
+          <Hr style={styles.divider} />
+          
+          <Text style={styles.text}>
+            Tài khoản của bạn đã được kích hoạt. Vui lòng sử dụng thông tin sau để đăng nhập:
+          </Text>
+
+          <table style={styles.table}>
+            <tbody>
+              <tr>
+                <td style={styles.labelCell}>Email:</td>
+                <td style={styles.valueCell}>
+                  <strong>{credentials.email}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.labelCell}>Mật khẩu:</td>
+                <td style={styles.valueCell}>
+                  <strong style={{ fontFamily: 'monospace', fontSize: '16px', backgroundColor: '#ffffff', padding: '2px 6px', borderRadius: '4px' }}>
+                    {credentials.password}
+                  </strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <Text style={{ ...styles.text, fontSize: '14px', fontStyle: 'italic', marginTop: '12px' }}>
+            * Vui lòng đổi mật khẩu sau khi đăng nhập lần đầu tiên để bảo mật tài khoản.
+          </Text>
+        </Section>
+      )}
 
       {/* Payment Details */}
       <Section style={styles.card}>

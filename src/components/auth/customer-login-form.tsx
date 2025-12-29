@@ -36,7 +36,6 @@ export function CustomerLoginForm() {
 
       if (result.success) {
         router.push('/customer');
-        router.refresh();
       } else {
         setError(result.error || 'Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
       }

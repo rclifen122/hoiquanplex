@@ -27,7 +27,7 @@ export async function getCustomer(): Promise<Customer | null> {
   const { data: customer } = await supabase
     .from('customers')
     .select('*')
-    .eq('id', user.id)
+    .eq('auth_user_id', user.id)
     .single();
 
   if (!customer) return null;

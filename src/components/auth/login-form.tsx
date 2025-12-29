@@ -42,7 +42,6 @@ export function LoginForm() {
 
       // Redirect to admin dashboard
       router.push('/admin');
-      router.refresh();
     } catch {
       setError('An unexpected error occurred');
       setIsLoading(false);

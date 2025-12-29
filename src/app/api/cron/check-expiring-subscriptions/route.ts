@@ -4,6 +4,10 @@ import { sendEmail } from '@/lib/email/send-email';
 import { render } from '@react-email/components';
 import { RenewalReminderEmail } from '@/lib/email/templates/renewal-reminder-email';
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * GET /api/cron/check-expiring-subscriptions
  * Cron job to check for subscriptions expiring in 7 days and send reminders

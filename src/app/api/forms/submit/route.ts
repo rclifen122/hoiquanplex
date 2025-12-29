@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 
 const formSubmissionSchema = z.object({
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     const { form_type, form_data, utm_source, utm_medium, utm_campaign } = validationResult.data;
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // Check if email already exists
     const { data: existingCustomer } = await supabase

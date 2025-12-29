@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { sendEmail } from '@/lib/email/send-email';
 import { render } from '@react-email/components';
 import { RenewalReminderEmail } from '@/lib/email/templates/renewal-reminder-email';
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // Get current date and date 7 days from now
     const now = new Date();

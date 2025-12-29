@@ -49,97 +49,104 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">
-          {error}
+    <div className="animate-fade-in-up">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 glass-card p-8 rounded-2xl">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-black uppercase tracking-widest text-plex-yellow">Admin Portal</h2>
+          <p className="text-white/50 text-sm mt-2">Dành cho quản trị viên</p>
         </div>
-      )}
 
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email address
-        </label>
-        <input
-          {...register('email')}
-          id="email"
-          type="email"
-          autoComplete="email"
+        {error && (
+          <div className="rounded-lg bg-red-900/50 border border-red-500/50 p-4 text-sm text-red-200">
+            {error}
+          </div>
+        )}
+
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2"
+          >
+            Email address
+          </label>
+          <input
+            {...register('email')}
+            id="email"
+            type="email"
+            autoComplete="email"
+            disabled={isLoading}
+            className="input-cinematic w-full"
+            placeholder="admin@hoiquanplex.site"
+          />
+          {errors.email && (
+            <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2"
+          >
+            Password
+          </label>
+          <input
+            {...register('password')}
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            disabled={isLoading}
+            className="input-cinematic w-full"
+            placeholder="••••••••"
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
           disabled={isLoading}
-          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          placeholder="admin@hoiquanplex.site"
-        />
-        {errors.email && (
-          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-        )}
-      </div>
-
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
+          className="w-full rounded-lg bg-plex-yellow px-4 py-3 text-sm font-bold text-black uppercase tracking-widest shadow-lg shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-plex-yellow focus:ring-offset-2 focus:ring-offset-black disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
         >
-          Password
-        </label>
-        <input
-          {...register('password')}
-          id="password"
-          type="password"
-          autoComplete="current-password"
-          disabled={isLoading}
-          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
-          placeholder="Enter your password"
-        />
-        {errors.password && (
-          <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-        )}
-      </div>
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-black"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Signing in...
+            </span>
+          ) : (
+            'Sign in'
+          )}
+        </button>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center">
-            <svg
-              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Signing in...
-          </span>
-        ) : (
-          'Sign in'
-        )}
-      </button>
-
-      <div className="text-center">
-        <a
-          href="/"
-          className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
-        >
-          ← Back to home
-        </a>
-      </div>
-    </form>
+        <div className="text-center">
+          <a
+            href="/"
+            className="text-sm text-white/60 hover:text-plex-yellow hover:underline transition-colors"
+          >
+            ← Back to home
+          </a>
+        </div>
+      </form>
+    </div>
   );
 }

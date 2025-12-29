@@ -18,35 +18,34 @@ export default function HomePage() {
     },
     {
       name: 'Pro',
-      price: '150,000đ',
+      price: '199.000₫',
       period: '/tháng',
-      description: 'Dành cho người dùng cá nhân',
+      description: 'Cho người yêu thích phim ảnh',
       features: [
-        'Truy cập toàn bộ nội dung',
-        'Chất lượng Full HD',
-        'Xem trên 2 thiết bị',
-        'Hỗ trợ ưu tiên',
+        'Tất cả nội dung',
+        'Chất lượng 4K HDR',
         'Không quảng cáo',
+        'Xem trên 2 thiết bị',
+        'Tải về xem offline',
       ],
+      href: '/customer/login?redirect=/customer/subscription',
       cta: 'Chọn gói Pro',
-      href: '/register/form-a',
       highlighted: true,
     },
     {
       name: 'Plus',
-      price: '300,000đ',
+      price: '299.000₫',
       period: '/tháng',
-      description: 'Dành cho gia đình',
+      description: 'Trải nghiệm đỉnh cao cho gia đình',
       features: [
         'Tất cả tính năng Pro',
-        'Chất lượng 4K Ultra HD',
         'Xem trên 4 thiết bị',
-        'Hỗ trợ VIP 24/7',
-        'Tải xuống không giới hạn',
-        '4 hồ sơ riêng biệt',
+        'Hỗ trợ Dolby Atmos',
+        'Chia sẻ tài khoản (4 profile)',
+        'Ưu tiên hỗ trợ 24/7',
       ],
+      href: '/customer/login?redirect=/customer/subscription',
       cta: 'Chọn gói Plus',
-      href: '/register/form-a',
       highlighted: false,
     },
   ];
@@ -94,7 +93,7 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="flex-1 text-center lg:text-left">
+              <div className="flex-1 text-center lg:text-left animate-fade-in-up">
                 <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight">
                   Trải nghiệm <br />
                   <span className="text-plex-yellow">Giải trí vô tận</span>
@@ -246,8 +245,8 @@ export default function HomePage() {
                 <div
                   key={plan.name}
                   className={`relative flex flex-col p-8 rounded-3xl transition-all hover:scale-[1.02] ${plan.highlighted
-                      ? 'bg-plex-yellow text-black shadow-2xl shadow-plex-yellow/20 ring-1 ring-plex-yellow'
-                      : 'bg-plex-card border border-white/10 text-white'
+                    ? 'bg-plex-yellow text-black shadow-2xl shadow-plex-yellow/20 ring-1 ring-plex-yellow'
+                    : 'bg-plex-card border border-white/10 text-white'
                     }`}
                 >
                   {plan.highlighted && (
@@ -279,8 +278,8 @@ export default function HomePage() {
                   <Link
                     href={plan.href}
                     className={`block w-full py-4 px-6 rounded-xl text-center text-sm font-black uppercase tracking-widest transition-all ${plan.highlighted
-                        ? 'bg-black text-white hover:bg-gray-900'
-                        : 'bg-plex-yellow text-black hover:bg-plex-yellow/90'
+                      ? 'bg-black text-white hover:bg-gray-900'
+                      : 'bg-plex-yellow text-black hover:bg-plex-yellow/90'
                       }`}
                   >
                     {plan.cta}

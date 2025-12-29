@@ -67,138 +67,156 @@ export function CustomerRegisterForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {error && (
-                <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">
-                    {error}
+        <div className="animate-fade-in-up">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 glass-card p-8 rounded-2xl">
+                <div className="text-center mb-8">
+                    <h2 className="text-2xl font-black uppercase tracking-widest text-plex-yellow">Đăng Ký Tài Khoản</h2>
+                    <p className="text-white/50 text-sm mt-2">Bắt đầu trải nghiệm giải trí đỉnh cao</p>
                 </div>
-            )}
 
-            <div>
-                <label htmlFor="full_name" className="block text-sm font-medium text-gray-700">
-                    Họ và tên <span className="text-red-600">*</span>
-                </label>
-                <input
-                    {...register('full_name')}
-                    type="text"
-                    className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Nguyễn Văn A"
-                    disabled={isLoading}
-                />
-                {errors.full_name && (
-                    <p className="mt-1 text-sm text-red-600">{errors.full_name.message}</p>
+                {error && (
+                    <div className="rounded-lg bg-red-900/50 border border-red-500/50 p-4 text-sm text-red-200">
+                        {error}
+                    </div>
                 )}
-            </div>
 
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email <span className="text-red-600">*</span>
-                </label>
-                <input
-                    {...register('email')}
-                    type="email"
-                    className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="email@example.com"
-                    disabled={isLoading}
-                />
-                {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                )}
-            </div>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div>
+                        <label htmlFor="full_name" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Họ và tên <span className="text-plex-yellow">*</span>
+                        </label>
+                        <input
+                            {...register('full_name')}
+                            type="text"
+                            className="input-cinematic w-full"
+                            placeholder="Nguyễn Văn A"
+                            disabled={isLoading}
+                        />
+                        {errors.full_name && (
+                            <p className="mt-1 text-sm text-red-400">{errors.full_name.message}</p>
+                        )}
+                    </div>
 
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Mật khẩu <span className="text-red-600">*</span>
-                </label>
-                <div className="relative mt-1">
-                    <input
-                        {...register('password')}
-                        type={showPassword ? 'text' : 'password'}
-                        className="block w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Tối thiểu 8 ký tự"
-                        disabled={isLoading}
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Email <span className="text-plex-yellow">*</span>
+                        </label>
+                        <input
+                            {...register('email')}
+                            type="email"
+                            className="input-cinematic w-full"
+                            placeholder="email@example.com"
+                            disabled={isLoading}
+                        />
+                        {errors.email && (
+                            <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                        )}
+                    </div>
                 </div>
-                {errors.password && (
-                    <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-                )}
-            </div>
 
-            <div>
-                <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700">
-                    Xác nhận mật khẩu <span className="text-red-600">*</span>
-                </label>
-                <div className="relative mt-1">
-                    <input
-                        {...register('confirm_password')}
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        className="block w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Nhập lại mật khẩu"
-                        disabled={isLoading}
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                        {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Mật khẩu <span className="text-plex-yellow">*</span>
+                        </label>
+                        <div className="relative mt-1">
+                            <input
+                                {...register('password')}
+                                type={showPassword ? 'text' : 'password'}
+                                className="input-cinematic w-full pr-12"
+                                placeholder="Tối thiểu 8 ký tự"
+                                disabled={isLoading}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                            >
+                                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                        </div>
+                        {errors.password && (
+                            <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+                        )}
+                    </div>
+
+                    <div>
+                        <label htmlFor="confirm_password" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Xác nhận mật khẩu <span className="text-plex-yellow">*</span>
+                        </label>
+                        <div className="relative mt-1">
+                            <input
+                                {...register('confirm_password')}
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                className="input-cinematic w-full pr-12"
+                                placeholder="Nhập lại mật khẩu"
+                                disabled={isLoading}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                            >
+                                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                        </div>
+                        {errors.confirm_password && (
+                            <p className="mt-1 text-sm text-red-400">{errors.confirm_password.message}</p>
+                        )}
+                    </div>
                 </div>
-                {errors.confirm_password && (
-                    <p className="mt-1 text-sm text-red-600">{errors.confirm_password.message}</p>
-                )}
-            </div>
 
-            <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    Số điện thoại
-                </label>
-                <input
-                    {...register('phone')}
-                    type="tel"
-                    className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="0912345678"
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Số điện thoại
+                        </label>
+                        <input
+                            {...register('phone')}
+                            type="tel"
+                            className="input-cinematic w-full"
+                            placeholder="0912345678"
+                            disabled={isLoading}
+                        />
+                        {errors.phone && (
+                            <p className="mt-1 text-sm text-red-400">{errors.phone.message}</p>
+                        )}
+                    </div>
+
+                    <div>
+                        <label htmlFor="facebook_profile" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                            Link Facebook (không bắt buộc)
+                        </label>
+                        <input
+                            {...register('facebook_profile')}
+                            type="url"
+                            className="input-cinematic w-full"
+                            placeholder="https://facebook.com/yourprofile"
+                            disabled={isLoading}
+                        />
+                        {errors.facebook_profile && (
+                            <p className="mt-1 text-sm text-red-400">{errors.facebook_profile.message}</p>
+                        )}
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
                     disabled={isLoading}
-                />
-                {errors.phone && (
-                    <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                )}
-            </div>
+                    className="w-full mt-8 rounded-lg bg-plex-yellow px-6 py-4 font-bold text-black uppercase tracking-widest shadow-lg shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-plex-yellow focus:ring-offset-2 focus:ring-offset-black disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+                >
+                    {isLoading ? (
+                        <span className="flex items-center justify-center gap-2">
+                            <div className="animate-spin h-4 w-4 border-2 border-black border-t-transparent rounded-full" />
+                            Đang xử lý...
+                        </span>
+                    ) : 'Đăng ký tài khoản'}
+                </button>
 
-            <div>
-                <label htmlFor="facebook_profile" className="block text-sm font-medium text-gray-700">
-                    Link Facebook (không bắt buộc)
-                </label>
-                <input
-                    {...register('facebook_profile')}
-                    type="url"
-                    className="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://facebook.com/yourprofile"
-                    disabled={isLoading}
-                />
-                {errors.facebook_profile && (
-                    <p className="mt-1 text-sm text-red-600">{errors.facebook_profile.message}</p>
-                )}
-            </div>
-
-            <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full rounded-lg bg-blue-600 px-6 py-4 font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 transition-colors"
-            >
-                {isLoading ? 'Đang xử lý...' : 'Đăng ký tài khoản'}
-            </button>
-
-            <p className="text-center text-xs text-gray-600">
-                Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng của chúng tôi.
-            </p>
-        </form>
+                <p className="text-center text-xs text-white/40 mt-4">
+                    Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng của chúng tôi.
+                </p>
+            </form>
+        </div>
     );
 }

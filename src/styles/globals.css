@@ -74,6 +74,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
@@ -89,6 +90,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -97,20 +99,38 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-secondary;
+  @apply bg-[#121212];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-md;
+  background-color: hsl(var(--plex-yellow) / 0.3);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/50;
+  background-color: hsl(var(--plex-yellow) / 0.6);
+}
+
+/* Cinematic Utilities */
+.bg-cinematic {
+  background-color: #000000;
+  background-image:
+    radial-gradient(at 50% 0%, rgba(229, 160, 13, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(229, 160, 13, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+.glass-card {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+}
+
+.input-cinematic {
+  @apply bg-white/5 border-b-2 border-white/20 border-t-0 border-x-0 rounded-t-md px-4 py-3 text-white placeholder:text-white/30 focus:border-plex-yellow focus:ring-0 focus:bg-white/10 transition-all duration-300;
 }
 
 /* Loading spinner */
@@ -127,6 +147,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

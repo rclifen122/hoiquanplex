@@ -82,10 +82,15 @@ export async function POST(request: NextRequest) {
 
         if (customerError) {
             console.error('Customer creation error:', customerError);
+            console.error('Customer creation error details:', JSON.stringify(customerError, null, 2));
             // Clean up auth user if customer creation fails
             await supabase.auth.admin.deleteUser(authUser.user.id);
             return NextResponse.json(
-                { error: 'Không thể tạo tài khoản khách hàng' },
+                {
+                    error: 'Không thể tạo tài khoản khách hàng',
+                    details: customerError.message,
+                    hint: customerError.hint,
+                },
                 { status: 500 }
             );
         }

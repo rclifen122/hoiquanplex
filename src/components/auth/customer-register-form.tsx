@@ -55,7 +55,10 @@ export function CustomerRegisterForm() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error || 'Đăng ký thất bại');
+                // Show detailed error if available
+                const errorMessage = errorData.error || 'Đăng ký thất bại';
+                const errorDetails = errorData.details ? `\nChi tiết: ${errorData.details}` : '';
+                throw new Error(errorMessage + errorDetails);
             }
 
             // Redirect to login page with success message
@@ -75,12 +78,12 @@ export function CustomerRegisterForm() {
                 </div>
 
                 {error && (
-                    <div className="rounded-lg bg-red-900/50 border border-red-500/50 p-4 text-sm text-red-200">
+                    <div className="rounded-lg bg-red-900/50 border border-red-500/50 p-4 text-sm text-red-200 whitespace-pre-wrap">
                         {error}
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div className="space-y-6">
                     <div>
                         <label htmlFor="full_name" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
                             Họ và tên <span className="text-plex-yellow">*</span>
@@ -112,9 +115,7 @@ export function CustomerRegisterForm() {
                             <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
                         )}
                     </div>
-                </div>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label htmlFor="password" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
                             Mật khẩu <span className="text-plex-yellow">*</span>
@@ -164,9 +165,7 @@ export function CustomerRegisterForm() {
                             <p className="mt-1 text-sm text-red-400">{errors.confirm_password.message}</p>
                         )}
                     </div>
-                </div>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label htmlFor="phone" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
                             Số điện thoại

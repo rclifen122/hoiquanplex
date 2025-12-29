@@ -20,16 +20,19 @@ export interface Plan {
 interface PlanSelectionProps {
     plans: Plan[];
     currentPlanId?: string;
-    userEmail?: string;
 }
 
-export function PlanSelection({ plans, currentPlanId, userEmail }: PlanSelectionProps) {
+export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
     const router = useRouter();
     const [loadingId, setLoadingId] = useState<string | null>(null);
     const [paymentData, setPaymentData] = useState<{
         payment_code: string;
         amount: number;
-        bank_info: any;
+        bank_info: {
+            bank_name: string;
+            account_number: string;
+            account_name: string;
+        };
     } | null>(null);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -80,8 +83,8 @@ export function PlanSelection({ plans, currentPlanId, userEmail }: PlanSelection
                         <div
                             key={plan.id}
                             className={`relative flex flex-col rounded-2xl bg-white p-8 shadow-sm ring-1 transition-all hover:scale-[1.02] ${plan.highlighted
-                                    ? 'ring-blue-600 shadow-xl'
-                                    : 'ring-gray-200'
+                                ? 'ring-blue-600 shadow-xl'
+                                : 'ring-gray-200'
                                 }`}
                         >
                             {plan.highlighted && (
@@ -117,10 +120,10 @@ export function PlanSelection({ plans, currentPlanId, userEmail }: PlanSelection
                                 onClick={() => handleUpgrade(plan)}
                                 disabled={isCurrent || loading || !!loadingId}
                                 className={`mt-8 block w-full rounded-lg px-6 py-4 text-center text-sm font-bold shadow-sm transition-all ${isCurrent
-                                        ? 'cursor-default bg-gray-100 text-gray-500'
-                                        : plan.highlighted
-                                            ? 'bg-blue-600 text-white hover:bg-blue-500 hover:shadow-lg'
-                                            : 'bg-gray-900 text-white hover:bg-gray-800'
+                                    ? 'cursor-default bg-gray-100 text-gray-500'
+                                    : plan.highlighted
+                                        ? 'bg-blue-600 text-white hover:bg-blue-500 hover:shadow-lg'
+                                        : 'bg-gray-900 text-white hover:bg-gray-800'
                                     } ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                             >
                                 {loading ? (

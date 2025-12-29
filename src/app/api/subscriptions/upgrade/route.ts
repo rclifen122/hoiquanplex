@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
         const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 24);
 
-        const { data: payment, error: paymentError } = await supabase
+        const { error: paymentError } = await supabase
             .from('payments')
             .insert({
                 customer_id: customer.id,

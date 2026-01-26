@@ -13,7 +13,9 @@ export default async function CustomerSubscriptionPage() {
     .from('subscription_plans')
     .select('*')
     .eq('is_active', true)
+    .eq('subscription_type', 'account')
     .order('price', { ascending: true });
+
 
   const activePlanId = subscription?.plan_id;
 

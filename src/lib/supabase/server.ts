@@ -38,3 +38,42 @@ export async function createClient() {
     }
   );
 }
+
+/**
+ * Create a Supabase client with Service Role privileges for Server Components
+ * Bypasses RLS.
+ */
+export async function createAdminClient() {
+  const cookieStore = await cookies();
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!serviceKey) {
+    console.warn('SUPABASE_SERVICE_ROLE_KEY is missing. Admin Dashboard will not show global stats.');
+  }
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    serviceKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch {
+            // Ignored
+          }
+        },
+        remove(name: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value: '', ...options });
+          } catch {
+            // Ignored
+          }
+        },
+      },
+    }
+  );
+}

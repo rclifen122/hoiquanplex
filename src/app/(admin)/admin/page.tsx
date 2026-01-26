@@ -1,10 +1,12 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { Users, PackagePlus, CreditCard, TrendingUp, ArrowUpRight } from 'lucide-react';
-import { createClient } from '@/lib/supabase/server';
+import { Users, PackagePlus, CreditCard, TrendingUp } from 'lucide-react';
+import { createAdminClient } from '@/lib/supabase/server';
 import { formatCurrency } from '@/lib/utils/format';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboardPage() {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   // 1. Total Customers
   const { count: totalCustomers } = await supabase
@@ -33,7 +35,7 @@ export default async function AdminDashboardPage() {
     .order('created_at', { ascending: false })
     .limit(100); // Limit to last 100 for basic estimate
 
-  const estimatedRevenue = recentPayments?.reduce((sum, p) => sum + Number(p.amount), 0) || 0;
+  const estimatedRevenue = (recentPayments || []).reduce((sum: number, p: any) => sum + Number(p?.amount || 0), 0);
 
   const stats = [
     {
@@ -107,7 +109,7 @@ export default async function AdminDashboardPage() {
                   </div>
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                  {stat.changeType === 'increase' && <ArrowUpRight className="w-4 h-4 text-green-500" />}
+                  {/* Removed ArrowUpRight to avoid icon version issues */}
                   <span className={`text-sm font-bold ${stat.changeType === 'decrease' ? 'text-red-400' : 'text-gray-500'
                     }`}>
                     {stat.change}

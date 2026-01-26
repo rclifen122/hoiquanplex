@@ -6,6 +6,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { signInWithCredentials } from '@/lib/auth/actions';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email('Email không hợp lệ'),
@@ -51,7 +54,7 @@ export function CustomerLoginForm() {
 
   return (
     <div className="animate-fade-in-up">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 glass-card p-8 rounded-2xl">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-black uppercase tracking-widest text-plex-yellow">Customer Login</h2>
           <p className="text-white/50 text-sm mt-2">Chào mừng bạn quay trở lại</p>
@@ -63,14 +66,14 @@ export function CustomerLoginForm() {
           </div>
         )}
 
-        <div>
+        <div className="space-y-2">
           <label
             htmlFor="email"
-            className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2"
+            className="block text-sm font-bold text-white/80 uppercase tracking-wider"
           >
             Email
           </label>
-          <input
+          <Input
             {...register('email')}
             type="email"
             id="email"
@@ -83,14 +86,14 @@ export function CustomerLoginForm() {
           )}
         </div>
 
-        <div>
+        <div className="space-y-2">
           <label
             htmlFor="password"
-            className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2"
+            className="block text-sm font-bold text-white/80 uppercase tracking-wider"
           >
             Mật khẩu
           </label>
-          <input
+          <Input
             {...register('password')}
             type="password"
             id="password"
@@ -123,18 +126,21 @@ export function CustomerLoginForm() {
           </div>
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={isLoading}
-          className="w-full rounded-lg bg-plex-yellow px-4 py-3 text-sm font-bold text-black uppercase tracking-widest shadow-lg shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-plex-yellow focus:ring-offset-2 focus:ring-offset-black disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+          variant="cinematic"
+          className="w-full py-6 text-base tracking-widest"
         >
           {isLoading ? (
-            <span className="flex items-center justify-center gap-2">
-              <div className="animate-spin h-4 w-4 border-2 border-black border-t-transparent rounded-full" />
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Đang đăng nhập...
-            </span>
-          ) : 'Đăng nhập'}
-        </button>
+            </>
+          ) : (
+            'Đăng nhập'
+          )}
+        </Button>
       </form>
     </div>
   );

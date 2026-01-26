@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const formSchema = z.object({
     full_name: z.string().min(2, 'Vui lòng nhập họ tên đầy đủ'),
@@ -71,7 +73,7 @@ export function CustomerRegisterForm() {
 
     return (
         <div className="animate-fade-in-up">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 glass-card p-8 rounded-2xl">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="text-center mb-8">
                     <h2 className="text-2xl font-black uppercase tracking-widest text-plex-yellow">Đăng Ký Tài Khoản</h2>
                     <p className="text-white/50 text-sm mt-2">Bắt đầu trải nghiệm giải trí đỉnh cao</p>
@@ -83,12 +85,12 @@ export function CustomerRegisterForm() {
                     </div>
                 )}
 
-                <div className="space-y-6">
-                    <div>
-                        <label htmlFor="full_name" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <label htmlFor="full_name" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Họ và tên <span className="text-plex-yellow">*</span>
                         </label>
-                        <input
+                        <Input
                             {...register('full_name')}
                             type="text"
                             className="input-cinematic w-full"
@@ -100,11 +102,11 @@ export function CustomerRegisterForm() {
                         )}
                     </div>
 
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                    <div className="space-y-2">
+                        <label htmlFor="email" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Email <span className="text-plex-yellow">*</span>
                         </label>
-                        <input
+                        <Input
                             {...register('email')}
                             type="email"
                             className="input-cinematic w-full"
@@ -116,12 +118,12 @@ export function CustomerRegisterForm() {
                         )}
                     </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                    <div className="space-y-2">
+                        <label htmlFor="password" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Mật khẩu <span className="text-plex-yellow">*</span>
                         </label>
                         <div className="relative mt-1">
-                            <input
+                            <Input
                                 {...register('password')}
                                 type={showPassword ? 'text' : 'password'}
                                 className="input-cinematic w-full pr-12"
@@ -131,7 +133,7 @@ export function CustomerRegisterForm() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
                             >
                                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                             </button>
@@ -141,12 +143,12 @@ export function CustomerRegisterForm() {
                         )}
                     </div>
 
-                    <div>
-                        <label htmlFor="confirm_password" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                    <div className="space-y-2">
+                        <label htmlFor="confirm_password" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Xác nhận mật khẩu <span className="text-plex-yellow">*</span>
                         </label>
                         <div className="relative mt-1">
-                            <input
+                            <Input
                                 {...register('confirm_password')}
                                 type={showConfirmPassword ? 'text' : 'password'}
                                 className="input-cinematic w-full pr-12"
@@ -156,7 +158,7 @@ export function CustomerRegisterForm() {
                             <button
                                 type="button"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
                             >
                                 {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                             </button>
@@ -166,11 +168,11 @@ export function CustomerRegisterForm() {
                         )}
                     </div>
 
-                    <div>
-                        <label htmlFor="phone" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                    <div className="space-y-2">
+                        <label htmlFor="phone" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Số điện thoại
                         </label>
-                        <input
+                        <Input
                             {...register('phone')}
                             type="tel"
                             className="input-cinematic w-full"
@@ -182,11 +184,11 @@ export function CustomerRegisterForm() {
                         )}
                     </div>
 
-                    <div>
-                        <label htmlFor="facebook_profile" className="block text-sm font-bold text-white/80 uppercase tracking-wider mb-2">
+                    <div className="space-y-2">
+                        <label htmlFor="facebook_profile" className="block text-sm font-bold text-white/80 uppercase tracking-wider">
                             Link Facebook (không bắt buộc)
                         </label>
-                        <input
+                        <Input
                             {...register('facebook_profile')}
                             type="url"
                             className="input-cinematic w-full"
@@ -199,18 +201,19 @@ export function CustomerRegisterForm() {
                     </div>
                 </div>
 
-                <button
+                <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full mt-8 rounded-lg bg-plex-yellow px-6 py-4 font-bold text-black uppercase tracking-widest shadow-lg shadow-plex-yellow/20 hover:bg-plex-yellow/90 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-plex-yellow focus:ring-offset-2 focus:ring-offset-black disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+                    variant="cinematic"
+                    className="w-full mt-8 py-6 text-base tracking-widest"
                 >
                     {isLoading ? (
-                        <span className="flex items-center justify-center gap-2">
-                            <div className="animate-spin h-4 w-4 border-2 border-black border-t-transparent rounded-full" />
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             Đang xử lý...
-                        </span>
+                        </>
                     ) : 'Đăng ký tài khoản'}
-                </button>
+                </Button>
 
                 <p className="text-center text-xs text-white/40 mt-4">
                     Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng của chúng tôi.

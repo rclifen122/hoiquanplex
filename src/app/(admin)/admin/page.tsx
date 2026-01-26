@@ -1,156 +1,176 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { Users, PackagePlus, CreditCard, TrendingUp } from 'lucide-react';
+import { Users, PackagePlus, CreditCard, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { createClient } from '@/lib/supabase/server';
+import { formatCurrency } from '@/lib/utils/format';
 
 export default async function AdminDashboardPage() {
-  // TODO: Fetch real data from Supabase
+  const supabase = await createClient();
+
+  // 1. Total Customers
+  const { count: totalCustomers } = await supabase
+    .from('customers')
+    .select('*', { count: 'exact', head: true });
+
+  // 2. Active Subscriptions
+  const { count: activeSubscriptions } = await supabase
+    .from('subscriptions')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'active');
+
+  // 3. Pending Payments (Assuming 'payments' table has status 'pending')
+  const { count: pendingPayments } = await supabase
+    .from('payments')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'pending');
+
+  // 4. Revenue (Mock for now, or sum if feasible with RPC)
+  // For now, let's just count total successful payments as a proxy or use a placeholder
+  // Real implementation would require a .rpc() call or summing in JS after fetching (expensive)
+  const { data: recentPayments } = await supabase
+    .from('payments')
+    .select('amount')
+    .eq('status', 'completed')
+    .order('created_at', { ascending: false })
+    .limit(100); // Limit to last 100 for basic estimate
+
+  const estimatedRevenue = recentPayments?.reduce((sum, p) => sum + Number(p.amount), 0) || 0;
+
   const stats = [
     {
       name: 'Total Customers',
-      value: '0',
+      value: totalCustomers?.toString() || '0',
       icon: Users,
-      change: '+0%',
-      changeType: 'increase',
+      change: 'Lifetime',
+      changeType: 'neutral',
+      color: 'text-blue-400',
+      bg: 'bg-blue-500/10',
     },
     {
       name: 'Active Subscriptions',
-      value: '0',
+      value: activeSubscriptions?.toString() || '0',
       icon: PackagePlus,
-      change: '+0%',
+      change: 'Live',
       changeType: 'increase',
+      color: 'text-green-400',
+      bg: 'bg-green-500/10',
     },
     {
       name: 'Pending Payments',
-      value: '0',
+      value: pendingPayments?.toString() || '0',
       icon: CreditCard,
-      change: '0',
-      changeType: 'neutral',
+      change: 'Action Needed',
+      changeType: pendingPayments && pendingPayments > 0 ? 'decrease' : 'neutral',
+      color: 'text-yellow-400',
+      bg: 'bg-yellow-500/10',
     },
     {
-      name: 'Monthly Revenue',
-      value: '0 VND',
+      name: 'Est. Revenue (Last 100)',
+      value: formatCurrency(estimatedRevenue),
       icon: TrendingUp,
-      change: '+0%',
+      change: 'Recent',
       changeType: 'increase',
+      color: 'text-purple-400',
+      bg: 'bg-purple-500/10',
     },
   ];
 
   return (
     <AdminDashboardLayout>
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="mt-1 text-sm text-gray-600">
-          Welcome to HoiQuanPlex CRM Admin Dashboard
-        </p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={stat.name}
-              className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    {stat.name}
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold text-gray-900">
-                    {stat.value}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-blue-50 p-3">
-                  <Icon className="h-6 w-6 text-blue-600" />
-                </div>
-              </div>
-              <div className="mt-4">
-                <span
-                  className={`text-sm font-medium ${
-                    stat.changeType === 'increase'
-                      ? 'text-green-600'
-                      : stat.changeType === 'decrease'
-                      ? 'text-red-600'
-                      : 'text-gray-600'
-                  }`}
-                >
-                  {stat.change}
-                </span>
-                <span className="text-sm text-gray-600"> from last month</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Quick Actions */}
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold text-gray-900">Quick Actions</h2>
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <a
-            href="/admin/customers"
-            className="flex items-center gap-4 rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-200 hover:shadow-md transition-shadow"
-          >
-            <div className="rounded-lg bg-blue-100 p-3">
-              <Users className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-medium text-gray-900">Manage Customers</h3>
-              <p className="text-sm text-gray-600">
-                View and manage customer accounts
-              </p>
-            </div>
-          </a>
-
-          <a
-            href="/admin/payments"
-            className="flex items-center gap-4 rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-200 hover:shadow-md transition-shadow"
-          >
-            <div className="rounded-lg bg-green-100 p-3">
-              <CreditCard className="h-6 w-6 text-green-600" />
-            </div>
-            <div>
-              <h3 className="font-medium text-gray-900">Verify Payments</h3>
-              <p className="text-sm text-gray-600">
-                Review pending payment requests
-              </p>
-            </div>
-          </a>
-
-          <a
-            href="/admin/subscriptions"
-            className="flex items-center gap-4 rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-200 hover:shadow-md transition-shadow"
-          >
-            <div className="rounded-lg bg-purple-100 p-3">
-              <PackagePlus className="h-6 w-6 text-purple-600" />
-            </div>
-            <div>
-              <h3 className="font-medium text-gray-900">Subscriptions</h3>
-              <p className="text-sm text-gray-600">
-                Monitor active subscriptions
-              </p>
-            </div>
-          </a>
+      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div>
+          <h1 className="text-3xl font-black text-white tracking-tight">Dashboard Overview</h1>
+          <p className="mt-2 text-sm text-gray-400">
+            Welcome back to <span className="text-plex-yellow font-bold">HoiQuanPlex</span> Command Center
+          </p>
         </div>
-      </div>
 
-      {/* Getting Started */}
-      <div className="mt-8 rounded-xl bg-blue-50 p-6">
-        <h2 className="text-lg font-semibold text-blue-900">
-          🚀 Getting Started
-        </h2>
-        <p className="mt-2 text-sm text-blue-700">
-          The admin dashboard is ready! Next steps:
-        </p>
-        <ul className="mt-4 space-y-2 text-sm text-blue-700">
-          <li>• Configure environment variables in Vercel</li>
-          <li>• Create your first admin user in Supabase</li>
-          <li>• Set up email service (Resend)</li>
-          <li>• Add bank transfer details</li>
-          <li>• Build customer management features</li>
-        </ul>
+        {/* Stats Grid */}
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={stat.name}
+                className="group relative overflow-hidden rounded-2xl bg-white/5 p-6 shadow-2xl ring-1 ring-white/10 transition-all hover:bg-white/10 hover:scale-[1.02]"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-400">
+                      {stat.name}
+                    </p>
+                    <p className="mt-2 text-3xl font-black text-white tracking-tight">
+                      {stat.value}
+                    </p>
+                  </div>
+                  <div className={`rounded-xl p-3 ${stat.bg}`}>
+                    <Icon className={`h-6 w-6 ${stat.color}`} />
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  {stat.changeType === 'increase' && <ArrowUpRight className="w-4 h-4 text-green-500" />}
+                  <span className={`text-sm font-bold ${stat.changeType === 'decrease' ? 'text-red-400' : 'text-gray-500'
+                    }`}>
+                    {stat.change}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mt-10">
+          <h2 className="text-xl font-bold text-white mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="/admin/customers"
+              className="group flex items-center gap-6 rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 transition-all hover:bg-plex-yellow hover:text-black"
+            >
+              <div className="rounded-xl bg-blue-500/20 p-4 ring-1 ring-blue-500/40 group-hover:bg-black/10 group-hover:ring-black/20 transition-colors">
+                <Users className="h-8 w-8 text-blue-400 group-hover:text-black" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold">Manage Customers</h3>
+                <p className="text-sm text-gray-400 group-hover:text-black/70">
+                  View full list & details
+                </p>
+              </div>
+            </a>
+
+            <a
+              href="/admin/payments"
+              className="group flex items-center gap-6 rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 transition-all hover:bg-plex-yellow hover:text-black"
+            >
+              <div className="rounded-xl bg-green-500/20 p-4 ring-1 ring-green-500/40 group-hover:bg-black/10 group-hover:ring-black/20 transition-colors">
+                <CreditCard className="h-8 w-8 text-green-400 group-hover:text-black" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold">Verify Payments</h3>
+                <p className="text-sm text-gray-400 group-hover:text-black/70">
+                  {pendingPayments} pending requests
+                </p>
+              </div>
+            </a>
+
+            <a
+              href="/admin/subscriptions"
+              className="group flex items-center gap-6 rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 transition-all hover:bg-plex-yellow hover:text-black"
+            >
+              <div className="rounded-xl bg-purple-500/20 p-4 ring-1 ring-purple-500/40 group-hover:bg-black/10 group-hover:ring-black/20 transition-colors">
+                <PackagePlus className="h-8 w-8 text-purple-400 group-hover:text-black" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold">Subscriptions</h3>
+                <p className="text-sm text-gray-400 group-hover:text-black/70">
+                  {activeSubscriptions} active plans
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
       </div>
     </AdminDashboardLayout>
   );
 }
+

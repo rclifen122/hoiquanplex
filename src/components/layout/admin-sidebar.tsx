@@ -28,10 +28,10 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full w-64 flex-col bg-gray-900">
+    <div className="flex h-full w-64 flex-col bg-black/90 border-r border-white/10 backdrop-blur-xl">
       {/* Logo */}
-      <div className="flex h-16 items-center justify-center border-b border-gray-800 px-4">
-        <h1 className="text-xl font-bold text-white">HoiQuanPlex CRM</h1>
+      <div className="flex h-16 items-center justify-center border-b border-white/10 px-4">
+        <h1 className="text-xl font-black text-plex-yellow tracking-tighter uppercase drop-shadow-md">HoiQuanPlex</h1>
       </div>
 
       {/* Navigation */}
@@ -44,13 +44,12 @@ export function AdminSidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-              }`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold transition-all duration-200 ${isActive
+                  ? 'bg-plex-yellow text-black shadow-lg shadow-plex-yellow/20'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className={`h-5 w-5 ${isActive ? 'text-black' : 'text-gray-500 group-hover:text-white'}`} />
               {item.name}
             </Link>
           );
@@ -58,10 +57,11 @@ export function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-gray-800 p-4 text-xs text-gray-500">
-        <p>Version 1.0.0</p>
+      <div className="border-t border-white/10 p-4 text-xs text-gray-500">
+        <p>Version 2.0.0 (Cinematic)</p>
         <p>© 2025 HoiQuanPlex</p>
       </div>
     </div>
   );
 }
+

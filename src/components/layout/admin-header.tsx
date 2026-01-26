@@ -40,25 +40,25 @@ export function AdminHeader({ adminUser }: AdminHeaderProps) {
   };
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
+    <header className="flex h-16 items-center justify-between border-b border-white/10 bg-black/40 backdrop-blur-md px-6 sticky top-0 z-10">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">Admin Dashboard</h2>
+        <h2 className="text-lg font-bold text-white tracking-wide">Dashboard Overview</h2>
       </div>
 
       {/* User Menu */}
       <div className="relative">
         <button
           onClick={() => setShowUserMenu(!showUserMenu)}
-          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 transition-colors"
+          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-white/5 transition-colors group"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-medium">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-plex-yellow text-black font-bold shadow-lg shadow-plex-yellow/20 group-hover:scale-105 transition-transform">
             {adminUser.full_name.charAt(0).toUpperCase()}
           </div>
-          <div className="text-left">
-            <p className="font-medium text-gray-900">{adminUser.full_name}</p>
-            <p className="text-xs text-gray-500">{adminUser.email}</p>
+          <div className="text-left hidden sm:block">
+            <p className="font-bold text-white group-hover:text-plex-yellow transition-colors">{adminUser.full_name}</p>
+            <p className="text-xs text-gray-400">{adminUser.email}</p>
           </div>
-          <ChevronDown className="h-4 w-4 text-gray-500" />
+          <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-white transition-colors" />
         </button>
 
         {showUserMenu && (
@@ -70,14 +70,14 @@ export function AdminHeader({ adminUser }: AdminHeaderProps) {
             ></div>
 
             {/* Dropdown Menu */}
-            <div className="absolute right-0 z-20 mt-2 w-64 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="p-4 border-b border-gray-100">
-                <p className="text-sm font-medium text-gray-900">
+            <div className="absolute right-0 z-20 mt-2 w-64 rounded-xl bg-black/90 border border-white/10 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+              <div className="p-4 border-b border-white/10">
+                <p className="text-sm font-bold text-white">
                   {adminUser.full_name}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">{adminUser.email}</p>
+                <p className="text-xs text-gray-400 mt-1">{adminUser.email}</p>
                 <span
-                  className={`mt-2 inline-block rounded-full px-2 py-1 text-xs font-medium ${getRoleBadgeColor(
+                  className={`mt-2 inline-block rounded-md px-2 py-1 text-[10px] font-bold uppercase tracking-wider ${getRoleBadgeColor(
                     adminUser.role
                   )}`}
                 >
@@ -91,7 +91,7 @@ export function AdminHeader({ adminUser }: AdminHeaderProps) {
                     setShowUserMenu(false);
                     // Navigate to profile (to be implemented)
                   }}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
                 >
                   <User className="h-4 w-4" />
                   Profile
@@ -99,7 +99,7 @@ export function AdminHeader({ adminUser }: AdminHeaderProps) {
 
                 <button
                   onClick={handleSignOut}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-50"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
                   Sign out
@@ -112,3 +112,4 @@ export function AdminHeader({ adminUser }: AdminHeaderProps) {
     </header>
   );
 }
+

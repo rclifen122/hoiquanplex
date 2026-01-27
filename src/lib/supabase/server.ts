@@ -43,37 +43,30 @@ export async function createClient() {
  * Create a Supabase client with Service Role privileges for Server Components
  * Bypasses RLS.
  */
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+
+/**
+ * Create a Supabase client with Service Role privileges for Server Components
+ * Bypasses RLS.
+ */
 export async function createAdminClient() {
-  const cookieStore = await cookies();
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!serviceKey) {
     console.warn('SUPABASE_SERVICE_ROLE_KEY is missing. Admin Dashboard will not show global stats.');
+    // Fallback to normal client if key is missing (restricted view)
+    return createClient();
   }
 
-  return createServerClient(
+  // Use pure supabase-js client for admin access to avoid session interference
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    serviceKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    serviceKey,
     {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch {
-            // Ignored
-          }
-        },
-        remove(name: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value: '', ...options });
-          } catch {
-            // Ignored
-          }
-        },
-      },
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
     }
   );
 }

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { formatCurrency } from '@/lib/utils/format';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Package, CreditCard, Clock, User, ArrowRight, ExternalLink } from 'lucide-react';
+import { Package, CreditCard, Clock, User, ArrowRight, ExternalLink, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default async function CustomerDashboardPage() {
   const customer = await getCustomer();
@@ -28,200 +28,184 @@ export default async function CustomerDashboardPage() {
     .order('created_at', { ascending: false });
 
   const tierLabels = {
-    free: 'Free Plan',
-    basic: 'Basic Plan',
-    pro: 'Pro Plan',
+    free: 'Free Explorer',
+    basic: 'Basic Member',
+    pro: 'Pro VIP',
   };
 
   const statusLabels = {
-    active: 'Hoạt động',
-    inactive: 'Chưa kích hoạt',
-    suspended: 'Tạm ngưng',
-  };
-
-  const statusColors = {
-    active: 'bg-green-500/10 text-green-400 border-green-500/20',
-    inactive: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-    suspended: 'bg-red-500/10 text-red-400 border-red-500/20',
+    active: 'Active',
+    inactive: 'Inactive',
+    suspended: 'Suspended',
   };
 
   return (
     <CustomerDashboardLayout>
-      <div className="space-y-8 animate-in fade-in duration-500">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold tracking-tight text-white glow-text">Tổng quan</h1>
-          <p className="text-sm text-gray-400">Chào mừng trở lại, {customer?.full_name}</p>
+      <div className="space-y-8 animate-in fade-in duration-700">
+
+        {/* Cinematic Header with Time-based Greeting would be ideal, static for now */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-900/50 via-blue-900/50 to-black p-10 ring-1 ring-white/10">
+          <div className="absolute top-0 right-0 p-32 bg-plex-yellow/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+          <div className="relative z-10">
+            <h1 className="text-4xl font-black text-white glow-text mb-2">
+              Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{customer?.full_name}</span>
+            </h1>
+            <p className="text-lg text-gray-300 max-w-xl leading-relaxed">
+              Welcome to your personal dashboard. Your entertainment center is ready.
+              {subscription ? " Enjoy your premium access." : " Upgrade to unlock the full potential."}
+            </p>
+          </div>
         </div>
 
-        {/* Customer Info Cards */}
+        {/* Stats / Info Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Account Status */}
-          <div className="glass-card hover-glow rounded-xl p-6 transition-all duration-300">
-            <div className="flex items-center justify-between">
+
+          {/* Account Status Card */}
+          <div className="group glass-card relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">Trạng thái tài khoản</p>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Account Tier</p>
                 <div className="mt-2 flex items-baseline gap-2">
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-2xl font-black text-white">
                     {customer && tierLabels[customer.tier]}
                   </p>
                 </div>
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 ring-1 ring-blue-500/20">
-                <User className="h-6 w-6" />
+              <div className="rounded-xl bg-blue-500/20 p-3 ring-1 ring-blue-500/40">
+                <User className="h-6 w-6 text-blue-400" />
               </div>
             </div>
-            <div className="mt-4">
-              <span className={cn(
-                "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium",
-                customer && statusColors[customer.status]
-              )}>
+            <div className="mt-4 flex items-center gap-2">
+              <div className={cn("h-2 w-2 rounded-full", customer?.status === 'active' ? "bg-green-500 animate-pulse" : "bg-gray-500")}></div>
+              <span className="text-sm font-medium text-gray-300">
                 {customer && statusLabels[customer.status]}
               </span>
             </div>
           </div>
 
-          {/* Subscription Status */}
-          <div className="glass-card hover-glow rounded-xl p-6 transition-all duration-300">
-            <div className="flex items-center justify-between">
+          {/* Subscription Card */}
+          <div className="group glass-card relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">Gói dịch vụ</p>
-                <p className="mt-2 text-2xl font-bold text-white">
-                  {subscription ? subscription.plan.name : 'Chưa đăng ký'}
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Current Plan</p>
+                <p className="mt-2 text-2xl font-black text-white">
+                  {subscription ? subscription.plan.name : 'Free Access'}
                 </p>
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400 ring-1 ring-purple-500/20">
-                <Package className="h-6 w-6" />
+              <div className="rounded-xl bg-purple-500/20 p-3 ring-1 ring-purple-500/40">
+                {subscription ? <ShieldCheck className="h-6 w-6 text-purple-400" /> : <Package className="h-6 w-6 text-purple-400" />}
               </div>
             </div>
             <div className="mt-4">
               <Link
                 href="/customer/subscription"
-                className="group flex items-center text-sm font-medium text-blue-400 hover:text-blue-300"
+                className="group/link flex items-center text-sm font-bold text-purple-400 hover:text-purple-300 transition-colors"
               >
-                Xem chi tiết
-                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                {subscription ? "Manage Subscription" : "Upgrade Now"}
+                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/link:translate-x-1" />
               </Link>
             </div>
           </div>
 
-          {/* Pending Payments */}
-          <div className="glass-card hover-glow rounded-xl p-6 transition-all duration-300">
-            <div className="flex items-center justify-between">
+          {/* Pending Payments Card */}
+          <div className="group glass-card relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
+            <div className="absolute inset-0 bg-gradient-to-br from-plex-yellow/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">Thanh toán chờ xử lý</p>
-                <p className="mt-2 text-2xl font-bold text-white">
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Pending Actions</p>
+                <p className="mt-2 text-2xl font-black text-white">
                   {pendingPayments?.length || 0}
                 </p>
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-plex-yellow/10 text-plex-yellow ring-1 ring-plex-yellow/20">
-                <Clock className="h-6 w-6" />
+              <div className="rounded-xl bg-plex-yellow/10 p-3 ring-1 ring-plex-yellow/30">
+                <Clock className="h-6 w-6 text-plex-yellow" />
               </div>
             </div>
-            {pendingPayments && pendingPayments.length > 0 && (
+            {pendingPayments && pendingPayments.length > 0 ? (
               <div className="mt-4">
                 <Link
                   href="/customer/payments"
-                  className="group flex items-center text-sm font-medium text-plex-yellow hover:text-plex-yellow/80"
+                  className="group/link flex items-center text-sm font-bold text-plex-yellow hover:text-amber-300 transition-colors"
                 >
-                  Xử lý ngay
-                  <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                  Confirm Payment
+                  <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/link:translate-x-1" />
                 </Link>
               </div>
+            ) : (
+              <div className="mt-4 text-sm text-gray-500">All caught up</div>
             )}
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="glass-card rounded-xl p-6">
-          <h2 className="mb-4 text-lg font-semibold text-white">Thao tác nhanh</h2>
+        {/* Quick Actions Grid */}
+        <div className="glass-card rounded-3xl p-8 backdrop-blur-xl">
+          <h2 className="mb-6 text-xl font-bold text-white flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-plex-yellow" />
+            Quick Access
+          </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Link
-              href="/customer/subscription"
-              className="flex items-center justify-between rounded-lg border border-white/5 bg-white/5 p-4 transition-all hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-purple-500/10"
-            >
-              <span className="text-sm font-medium text-gray-200">Xem gói dịch vụ</span>
-              <Package className="h-5 w-5 text-purple-400" />
-            </Link>
-            <Link
-              href="/customer/payments"
-              className="flex items-center justify-between rounded-lg border border-white/5 bg-white/5 p-4 transition-all hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-blue-500/10"
-            >
-              <span className="text-sm font-medium text-gray-200">Lịch sử thanh toán</span>
-              <CreditCard className="h-5 w-5 text-blue-400" />
-            </Link>
-            <Link
-              href="/customer/profile"
-              className="flex items-center justify-between rounded-lg border border-white/5 bg-white/5 p-4 transition-all hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-green-500/10"
-            >
-              <span className="text-sm font-medium text-gray-200">Cập nhật hồ sơ</span>
-              <User className="h-5 w-5 text-green-400" />
-            </Link>
-            <a
-              href="mailto:support@hoiquanplex.site"
-              className="flex items-center justify-between rounded-lg border border-white/5 bg-white/5 p-4 transition-all hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-plex-yellow/10"
-            >
-              <span className="text-sm font-medium text-gray-200">Liên hệ hỗ trợ</span>
-              <ExternalLink className="h-5 w-5 text-plex-yellow" />
-            </a>
+            {[
+              { href: "/customer/subscription", label: "Browse Plans", icon: Package, color: "text-purple-400", hoverShadow: "hover:shadow-purple-500/20" },
+              { href: "/customer/payments", label: "Transaction History", icon: CreditCard, color: "text-blue-400", hoverShadow: "hover:shadow-blue-500/20" },
+              { href: "/customer/profile", label: "My Profile", icon: User, color: "text-green-400", hoverShadow: "hover:shadow-green-500/20" },
+              { href: "mailto:support@hoiquanplex.site", label: "Get Support", icon: ExternalLink, color: "text-plex-yellow", hoverShadow: "hover:shadow-plex-yellow/20" }
+            ].map((action) => (
+              <Link
+                key={action.label}
+                href={action.href}
+                className={`flex items-center justify-between rounded-xl border border-white/5 bg-white/5 p-4 transition-all hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] hover:shadow-lg ${action.hoverShadow}`}
+              >
+                <span className="font-semibold text-gray-200">{action.label}</span>
+                <action.icon className={`h-5 w-5 ${action.color}`} />
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Recent Payments Table */}
+        {/* Recent Payments Table - Styled */}
         {recentPayments && recentPayments.length > 0 && (
-          <div className="glass-card overflow-hidden rounded-xl">
-            <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
-                Thanh toán gần đây
-              </h2>
+          <div className="glass-card overflow-hidden rounded-3xl">
+            <div className="border-b border-white/10 px-8 py-6 flex items-center justify-between bg-white/5">
+              <h2 className="text-lg font-bold text-white">Recent Transactions</h2>
               <Link
                 href="/customer/payments"
-                className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+                className="text-sm font-semibold text-gray-400 hover:text-white transition-colors"
               >
-                Xem tất cả
+                View All
               </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-white/5">
+                <thead className="bg-black/20">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                      Mã thanh toán
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                      Số tiền
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                      Trạng thái
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                      Ngày tạo
-                    </th>
+                    <th className="px-8 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Code</th>
+                    <th className="px-8 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Amount</th>
+                    <th className="px-8 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Status</th>
+                    <th className="px-8 py-4 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 bg-transparent">
+                <tbody className="divide-y divide-white/5">
                   {recentPayments.map((payment) => (
                     <tr key={payment.id} className="group hover:bg-white/5 transition-colors">
-                      <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-white group-hover:text-plex-yellow transition-colors">
+                      <td className="whitespace-nowrap px-8 py-5 text-sm font-mono font-medium text-white group-hover:text-plex-yellow transition-colors">
                         {payment.payment_code}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-300">
+                      <td className="whitespace-nowrap px-8 py-5 text-sm font-bold text-gray-200">
                         {formatCurrency(payment.amount, payment.currency)}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4">
+                      <td className="whitespace-nowrap px-8 py-5">
                         <span className={cn(
-                          "rounded-full px-2.5 py-0.5 text-xs font-medium border",
-                          payment.status === 'succeeded'
-                            ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                            : payment.status === 'pending'
-                              ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
-                              : payment.status === 'failed'
-                                ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                                : 'bg-gray-500/10 text-gray-400 border-gray-500/20'
+                          "inline-flex items-center rounded-full px-3 py-1 text-xs font-bold border",
+                          payment.status === 'succeeded' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
+                            payment.status === 'pending' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
+                              'bg-red-500/10 text-red-400 border-red-500/20'
                         )}>
-                          {payment.status}
+                          {payment.status.toUpperCase()}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
+                      <td className="whitespace-nowrap px-8 py-5 text-sm text-gray-500">
                         {new Date(payment.created_at).toLocaleDateString('vi-VN')}
                       </td>
                     </tr>

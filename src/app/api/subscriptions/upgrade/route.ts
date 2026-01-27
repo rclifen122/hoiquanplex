@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         }
 
         const { plan_id } = validationResult.data;
-        const supabase = createAdminClient();
+        const supabase = await createAdminClient();
 
         // 3. Get Plan Details
         const { data: plan, error: planError } = await supabase

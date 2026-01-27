@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
         const { full_name, email, password, phone, facebook_profile } = validationResult.data;
 
-        const supabase = createAdminClient();
+        const supabase = await createAdminClient();
 
         // Check if email already exists
         const { data: existingCustomer } = await supabase

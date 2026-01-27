@@ -12,7 +12,7 @@ export async function GET(
   try {
     const { id } = params;
 
-    const supabase = createAdminClient();
+    const supabase = await createAdminClient();
 
     const { data: payment, error } = await supabase
       .from('payments')

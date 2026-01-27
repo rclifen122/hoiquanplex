@@ -30,10 +30,10 @@ export default async function PaymentPage({ params }: { params: { id: string } }
 
     // Bank details from Environment Variables
     const bankDetails = {
-        bankName: process.env.NEXT_PUBLIC_BANK_NAME || 'MB Bank',
-        bankCode: process.env.NEXT_PUBLIC_BANK_ID || 'MB', // BIN/ID for VietQR (e.g., 970422)
-        accountNumber: process.env.NEXT_PUBLIC_BANK_ACCOUNT_NUM || '0000000000',
-        accountName: process.env.NEXT_PUBLIC_BANK_ACCOUNT_NAME || 'NGUYEN VAN A',
+        bankName: process.env.NEXT_PUBLIC_BANK_NAME || 'Vietcombank',
+        bankCode: process.env.NEXT_PUBLIC_BANK_ID || 'VCB', // BIN/ID for VietQR (e.g., 970422)
+        accountNumber: process.env.NEXT_PUBLIC_BANK_ACCOUNT_NUM || '1012406280',
+        accountName: process.env.NEXT_PUBLIC_BANK_ACCOUNT_NAME || 'MAC TUAN ANH',
         branch: 'Hội sở chính'
     };
 

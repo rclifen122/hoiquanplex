@@ -35,7 +35,7 @@ export default async function AdminDashboardPage() {
     .order('created_at', { ascending: false })
     .limit(100); // Limit to last 100 for basic estimate
 
-  const estimatedRevenue = (recentPayments || []).reduce((sum: number, p: any) => sum + Number(p?.amount || 0), 0);
+  const estimatedRevenue = (recentPayments || []).reduce((sum: number, p: { amount: number | null }) => sum + Number(p?.amount || 0), 0);
 
   const stats = [
     {

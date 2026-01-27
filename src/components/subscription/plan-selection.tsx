@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Check, Loader2, Sparkles, Zap } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/format';
-import { useRouter } from 'next/navigation';
+
 import { cn } from '@/lib/utils'; // Assuming cn utility exists, it was used in sidebar
 
 export interface Plan {
@@ -23,7 +23,7 @@ interface PlanSelectionProps {
 }
 
 export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
-    const router = useRouter();
+
     const [loadingId, setLoadingId] = useState<string | null>(null);
 
     const handleUpgrade = async (plan: Plan) => {
@@ -65,7 +65,7 @@ export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
             {plans.map((plan) => {
                 const isCurrent = plan.id === currentPlanId;
                 const loading = loadingId === plan.id;
-                const isPro = plan.slug.includes('pro') || plan.tier === 'pro';
+
 
                 return (
                     <div

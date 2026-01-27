@@ -9,7 +9,7 @@ import {
   CreditCard,
   Package,
   User,
-  LogOut,
+
   Home
 } from 'lucide-react';
 

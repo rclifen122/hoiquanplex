@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Customer } from '@/lib/auth/customer-auth-helpers';
 import { signOut } from '@/lib/auth/actions';
 import { Menu, LogOut, User, ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+
 
 interface CustomerHeaderProps {
   customer: Customer;

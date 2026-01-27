@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/server';
 import { getAdminUser } from '@/lib/auth/auth-helpers';
 import { sendEmail } from '@/lib/email/send-email';
 import { render } from '@react-email/components';
@@ -30,7 +30,7 @@ export async function POST(
     const body = await request.json();
     const { bank_transaction_ref, action } = body;
 
-    const supabase = createAdminClient();
+    const supabase = await createAdminClient();
 
     // Get payment details
     const { data: payment, error: paymentError } = await supabase
@@ -75,13 +75,13 @@ export async function POST(
           console.error('Failed to create auth user:', authError);
           // If user already exists in Auth but not linked in customers table
           if (authError.message.includes('already been registered')) {
-             // Try to find the user to link
-             // Since we can't search users by email easily with public API, 
-             // we assume this might be an edge case. 
-             // For now, fail safely or continue without credentials.
-             console.warn('User likely already exists, proceeding without password generation');
+            // Try to find the user to link
+            // Since we can't search users by email easily with public API, 
+            // we assume this might be an edge case. 
+            // For now, fail safely or continue without credentials.
+            console.warn('User likely already exists, proceeding without password generation');
           } else {
-             return NextResponse.json(
+            return NextResponse.json(
               { error: 'Failed to create user account: ' + authError.message },
               { status: 500 }
             );

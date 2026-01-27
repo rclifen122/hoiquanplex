@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 const verifySchema = z.object({
-  bank_transaction_ref: z.string().min(1, 'Bank transaction reference is required'),
+  bank_transaction_ref: z.string().optional(),
   action: z.enum(['approve', 'reject']),
   rejection_reason: z.string().optional(),
 });
@@ -73,7 +73,7 @@ export function PaymentVerificationForm({ paymentId }: PaymentVerificationFormPr
             {...register('bank_transaction_ref')}
             type="text"
             className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter bank transaction ID"
+            placeholder="Enter bank transaction ID (Optional)"
           />
           {errors.bank_transaction_ref && (
             <p className="mt-1 text-sm text-red-600">{errors.bank_transaction_ref.message}</p>

@@ -161,6 +161,7 @@ export function BankTransferDetails({
 function InfoRow({
   label,
   value,
+  subValue,
   onCopy,
   copied,
   important = false,

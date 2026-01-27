@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
         if (dbError) {
             console.error('Database error:', dbError);
-            return NextResponse.json({ error: 'Failed to create payment record' }, { status: 500 });
+            return NextResponse.json({ error: 'Failed to create payment record', details: dbError }, { status: 500 });
         }
 
         return NextResponse.json({

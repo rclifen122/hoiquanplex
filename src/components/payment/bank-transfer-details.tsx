@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, Info, Smartphone, CreditCard, ShieldCheck } from 'lucide-react';
+import { Copy, Check, Smartphone, CreditCard, ShieldCheck } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/format';
 import { cn } from '@/lib/utils';
 

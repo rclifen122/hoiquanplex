@@ -40,14 +40,22 @@ export function PaymentVerificationForm({ paymentId }: PaymentVerificationFormPr
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to verify payment');
+        const errorText = await response.text();
+        console.error('Verification failed. Status:', response.status, 'Body:', errorText);
+        try {
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.error || `Verification failed with status: ${response.status}`);
+        } catch (e) {
+          throw new Error(`Verification failed: ${errorText || response.statusText}`);
+        }
       }
 
+      console.log('Verification successful. Redirecting...');
       router.push('/admin/payments');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error('Verification error:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred during verification');
       setIsLoading(false);
     }
   };

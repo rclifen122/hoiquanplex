@@ -1,11 +1,11 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/server';
 import { PaymentVerificationForm } from '@/components/payment/payment-verification-form';
 import { formatCurrency, formatDateTime } from '@/lib/utils/format';
 import { redirect } from 'next/navigation';
 
 export default async function PaymentDetailPage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   const { data: payment, error } = await supabase
     .from('payments')
@@ -49,11 +49,10 @@ export default async function PaymentDetailPage({ params }: { params: { id: stri
               <div>
                 <dt className="text-sm text-gray-500">Status</dt>
                 <dd className="mt-1">
-                  <span className={`rounded-full px-3 py-1 text-sm font-medium ${
-                    payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                  <span className={`rounded-full px-3 py-1 text-sm font-medium ${payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                     payment.status === 'succeeded' ? 'bg-green-100 text-green-800' :
-                    'bg-gray-100 text-gray-800'
-                  }`}>
+                      'bg-gray-100 text-gray-800'
+                    }`}>
                     {payment.status}
                   </span>
                 </dd>

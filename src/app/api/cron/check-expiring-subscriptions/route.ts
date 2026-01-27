@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/server';
 import { sendEmail } from '@/lib/email/send-email';
 import { render } from '@react-email/components';
 import { RenewalReminderEmail } from '@/lib/email/templates/renewal-reminder-email';

@@ -1,6 +1,6 @@
 
 import { type NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/server';
 import { getCustomer } from '@/lib/auth/customer-auth-helpers';
 import { z } from 'zod';
 import { generatePaymentCode } from '@/lib/utils/payment-code';

@@ -12,5 +12,9 @@ export default async function CustomerLayout({
     redirect('/customer/login');
   }
 
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen bg-cinematic text-white">
+      {children}
+    </div>
+  );
 }

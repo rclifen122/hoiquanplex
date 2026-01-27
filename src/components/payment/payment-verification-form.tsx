@@ -45,7 +45,7 @@ export function PaymentVerificationForm({ paymentId }: PaymentVerificationFormPr
         try {
           const errorData = JSON.parse(errorText);
           throw new Error(errorData.error || `Verification failed with status: ${response.status}`);
-        } catch (e) {
+        } catch (_e) {
           throw new Error(`Verification failed: ${errorText || response.statusText}`);
         }
       }

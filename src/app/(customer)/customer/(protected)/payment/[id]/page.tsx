@@ -39,27 +39,41 @@ export default async function PaymentPage({ params }: { params: { id: string } }
 
     return (
         <CustomerDashboardLayout>
-            <div className="max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="mb-8 flex items-center gap-4">
-                    <Link
-                        href="/customer/subscription"
-                        className="rounded-full p-2 hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft className="h-6 w-6" />
-                    </Link>
-                    <div>
-                        <h1 className="text-2xl font-bold text-white glow-text">Thanh toán đơn hàng</h1>
-                        <p className="text-gray-400 text-sm">Vui lòng hoàn tất chuyển khoản để kích hoạt dịch vụ</p>
-                    </div>
+            <div className="max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+
+                {/* Header */}
+                <div className="mb-10 flex flex-col items-center text-center">
+                    <span className="inline-flex items-center rounded-full bg-plex-yellow/10 px-3 py-1 text-xs font-bold text-plex-yellow mb-4 ring-1 ring-plex-yellow/20">
+                        Step 2 of 2: Payment
+                    </span>
+                    <h1 className="text-4xl font-black text-white glow-text tracking-tight mb-3">
+                        Complete Your Order
+                    </h1>
+                    <p className="text-gray-400 text-lg max-w-lg">
+                        You're almost there! Use the QR code below to finalize your upgrade securely.
+                    </p>
                 </div>
 
-                <div className="glass-card rounded-2xl p-1">
-                    <BankTransferDetails
-                        paymentCode={payment.payment_code}
-                        amount={payment.amount}
-                        bankDetails={bankDetails}
-                    />
+                {/* Back Button */}
+                <div className="mb-6">
+                    <Link
+                        href="/customer/subscription"
+                        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors group"
+                    >
+                        <div className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                            <ArrowLeft className="h-4 w-4" />
+                        </div>
+                        Back to Plans
+                    </Link>
                 </div>
+
+                {/* Main Payment Compo */}
+                <BankTransferDetails
+                    paymentCode={payment.payment_code}
+                    amount={payment.amount}
+                    bankDetails={bankDetails}
+                />
+
             </div>
         </CustomerDashboardLayout>
     );

@@ -41,16 +41,19 @@ export function BankTransferDetails({
 
       {/* LEFT COLUMN: QR CODE (Center Stage) */}
       <div className="lg:col-span-5 flex flex-col">
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl text-center shadow-2xl h-full flex flex-col justify-center items-center group">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-3xl shadow-2xl h-full flex flex-col justify-center items-center group">
           {/* Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-plex-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute -top-24 -left-24 w-48 h-48 bg-plex-yellow/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-          <h3 className="relative z-10 text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <Smartphone className="h-5 w-5 text-plex-yellow" />
+          <h3 className="relative z-10 text-xl font-bold text-white mb-8 flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-plex-yellow/20 text-plex-yellow ring-1 ring-plex-yellow/50">
+              <Smartphone className="h-5 w-5" />
+            </div>
             Scan to Pay
           </h3>
 
-          <div className="relative z-10 bg-white p-4 rounded-2xl shadow-lg ring-4 ring-white/10 transition-transform duration-500 group-hover:scale-105">
+          <div className="relative z-10 bg-white p-4 rounded-2xl shadow-2xl ring-4 ring-white/10 transition-transform duration-500 group-hover:scale-105">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={vietQrUrl}
@@ -58,18 +61,13 @@ export function BankTransferDetails({
               className="h-64 w-64 object-contain rounded-lg"
               loading="lazy"
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs font-bold">
-                VietQR Supported
-              </div>
-            </div>
           </div>
 
-          <div className="relative z-10 mt-6 space-y-2">
-            <p className="text-sm text-gray-400">
+          <div className="relative z-10 mt-8 space-y-3 text-center">
+            <p className="text-sm font-medium text-gray-300">
               Open your <strong>Mobile Banking App</strong>
             </p>
-            <p className="text-xs text-gray-500 max-w-[200px] mx-auto">
+            <p className="text-xs text-gray-500 max-w-[200px] mx-auto leading-relaxed">
               Scan this code to auto-fill amount & description.
             </p>
           </div>
@@ -80,36 +78,43 @@ export function BankTransferDetails({
       <div className="lg:col-span-7 space-y-6">
 
         {/* Important Info Card */}
-        <div className="rounded-2xl border border-blue-500/20 bg-blue-500/10 p-6 backdrop-blur-md">
-          <h3 className="text-sm font-bold text-blue-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="relative overflow-hidden rounded-3xl border border-blue-500/30 bg-blue-900/10 p-8 backdrop-blur-xl">
+          <div className="absolute top-0 right-0 p-20 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
+
+          <h3 className="relative z-10 text-xs font-bold text-blue-400 uppercase tracking-widest mb-4 flex items-center gap-2">
             <CreditCard className="h-4 w-4" />
             Required Transfer Content
           </h3>
-          <div className="flex items-center justify-between rounded-xl bg-black/30 border border-white/10 p-4">
-            <div>
-              <p className="text-3xl font-black text-white tracking-widest">{paymentCode}</p>
-              <p className="text-xs text-gray-400 mt-1 uppercase font-semibold">Exact content required</p>
+
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl bg-black/40 border border-blue-500/20 p-5 shadow-inner">
+            <div className="text-center sm:text-left">
+              <p className="text-4xl font-black text-white tracking-widest font-mono shadow-black drop-shadow-lg">
+                {paymentCode}
+              </p>
+              <p className="text-[10px] text-blue-300/80 mt-2 uppercase font-bold tracking-widest">
+                Exact content required
+              </p>
             </div>
             <button
               onClick={() => copyToClipboard(paymentCode, 'code')}
-              className="p-3 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white transition-all active:scale-95"
+              className="shrink-0 p-3 rounded-xl bg-blue-500 text-white hover:bg-blue-400 hover:scale-105 transition-all active:scale-95 shadow-lg shadow-blue-500/20"
               title="Copy Code"
             >
-              {copiedField === 'code' ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+              {copiedField === 'code' ? <Check className="h-6 w-6" /> : <Copy className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
         {/* Amount Card */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl shadow-lg hover:bg-white/[0.05] transition-colors">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Amount</p>
-              <p className="text-4xl font-black text-white mt-1">{formatCurrency(amount)}</p>
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Total Amount</p>
+              <p className="text-4xl font-black text-white mt-1 tracking-tight">{formatCurrency(amount)}</p>
             </div>
             <button
               onClick={() => copyToClipboard(amount.toString(), 'amount')}
-              className="p-3 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-all active:scale-95"
+              className="p-3 rounded-xl bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-all active:scale-95"
             >
               {copiedField === 'amount' ? <Check className="h-5 w-5 text-green-400" /> : <Copy className="h-5 w-5" />}
             </button>
@@ -117,8 +122,8 @@ export function BankTransferDetails({
         </div>
 
         {/* Bank Details Card */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md space-y-5">
-          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider border-b border-white/10 pb-3">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl shadow-lg space-y-6">
+          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest border-b border-white/10 pb-4">
             Bank Account Details
           </h3>
 
@@ -147,13 +152,15 @@ export function BankTransferDetails({
         </div>
 
         {/* Confirmation Note */}
-        <div className="flex gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-          <ShieldCheck className="h-6 w-6 text-green-400 shrink-0" />
+        <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-r from-yellow-500/10 to-transparent border border-yellow-500/20 items-start">
+          <div className="p-2 rounded-lg bg-yellow-500/20 text-yellow-500">
+            <ShieldCheck className="h-5 w-5" />
+          </div>
           <div className="space-y-1">
-            <h4 className="font-bold text-green-400 text-sm">Automated Verification</h4>
-            <p className="text-xs text-gray-300 leading-relaxed">
-              System will automatically verify your payment within <strong>5-10 minutes</strong> after transfer.
-              Please keep your transfer receipt just in case.
+            <h4 className="font-bold text-yellow-500 text-sm">Payment Verification</h4>
+            <p className="text-xs text-gray-400 leading-relaxed max-w-lg">
+              After transfer, please allow <strong>3-6 hours</strong> for our team to verify and activate your plan.
+              <br /><span className="opacity-70">For faster support, contact us with your payment receipt.</span>
             </p>
           </div>
         </div>

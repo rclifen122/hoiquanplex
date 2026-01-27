@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Check, Loader2, Sparkles, Zap } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/format';
-
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils'; // Assuming cn utility exists, it was used in sidebar
 
 export interface Plan {
@@ -23,7 +23,7 @@ interface PlanSelectionProps {
 }
 
 export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
-
+    const router = useRouter();
     const [loadingId, setLoadingId] = useState<string | null>(null);
 
     const handleUpgrade = async (plan: Plan) => {
@@ -31,14 +31,14 @@ export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
         setLoadingId(plan.id);
 
         try {
-            const response = await fetch('/api/payments/stripe-checkout', {
+            const response = await fetch('/api/payments/manual-create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     planId: plan.id,
                     planName: plan.name,
                     amount: plan.price,
-                    interval: 'month', // defaulted to month as per previous implementation logic
+                    interval: 'month',
                 }),
             });
 
@@ -48,10 +48,10 @@ export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
                 throw new Error(data.error || 'Khởi tạo thanh toán thất bại');
             }
 
-            if (data.url) {
-                window.location.href = data.url;
+            if (data.paymentId) {
+                router.push(`/customer/payment/${data.paymentId}`);
             } else {
-                throw new Error('Không nhận được đường dẫn thanh toán từ Stripe');
+                throw new Error('Không nhận được mã thanh toán');
             }
         } catch (error) {
             console.error('Payment error:', error);

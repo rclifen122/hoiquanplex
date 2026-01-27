@@ -33,128 +33,130 @@ export function BankTransferDetails({
     }
   };
 
-  const transferContent = `${paymentCode} ${formatCurrency(amount)}`;
+  const vietQrUrl = `https://img.vietqr.io/image/${bankDetails.bankCode}-${bankDetails.accountNumber}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(paymentCode)}&accountName=${encodeURIComponent(bankDetails.accountName)}`;
 
   return (
-    <div className="space-y-6">
-      {/* Payment Code - Most Important */}
-      <div className="rounded-lg bg-blue-50 p-6">
-        <h3 className="mb-3 text-sm font-medium text-blue-900">
-          Mã thanh toán (Ghi vào nội dung chuyển khoản)
-        </h3>
-        <div className="flex items-center justify-between rounded-lg bg-white p-4">
-          <div>
-            <p className="text-2xl font-bold text-blue-600">{paymentCode}</p>
-            <p className="mt-1 text-sm text-gray-600">
-              Vui lòng ghi chính xác mã này
-            </p>
-          </div>
-          <button
-            onClick={() => copyToClipboard(paymentCode, 'code')}
-            className="rounded-lg bg-blue-600 p-2.5 text-white hover:bg-blue-700 transition-colors"
-          >
-            {copiedField === 'code' ? (
-              <Check className="h-5 w-5" />
-            ) : (
-              <Copy className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Transfer Amount */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-600">Số tiền chuyển khoản</p>
-            <p className="mt-1 text-3xl font-bold text-gray-900">
-              {formatCurrency(amount)}
-            </p>
-          </div>
-          <button
-            onClick={() => copyToClipboard(amount.toString(), 'amount')}
-            className="rounded-lg border border-gray-300 p-2.5 hover:bg-gray-50 transition-colors"
-          >
-            {copiedField === 'amount' ? (
-              <Check className="h-5 w-5 text-green-600" />
-            ) : (
-              <Copy className="h-5 w-5 text-gray-600" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Bank Details */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <h3 className="mb-4 font-semibold text-gray-900">
-          Thông tin tài khoản nhận
-        </h3>
-        <div className="space-y-3">
-          <InfoRow
-            label="Ngân hàng"
-            value={`${bankDetails.bankName} (${bankDetails.bankCode})`}
-            onCopy={() =>
-              copyToClipboard(bankDetails.accountNumber, 'account')
-            }
-            copied={copiedField === 'bank'}
+    <div className="space-y-8">
+      {/* 1. QR Code Section - Center Stage */}
+      <div className="flex flex-col items-center justify-center space-y-4 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200">
+        <h3 className="text-lg font-bold text-gray-900">Quét mã để thanh toán</h3>
+        <div className="relative aspect-square w-64 overflow-hidden rounded-xl bg-gray-100 ring-1 ring-gray-200">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={vietQrUrl}
+            alt="VietQR Payment Code"
+            className="h-full w-full object-contain"
+            loading="lazy"
           />
-          <InfoRow
-            label="Số tài khoản"
-            value={bankDetails.accountNumber}
-            onCopy={() =>
-              copyToClipboard(bankDetails.accountNumber, 'account')
-            }
-            copied={copiedField === 'account'}
-            important
-          />
-          <InfoRow
-            label="Chủ tài khoản"
-            value={bankDetails.accountName}
-            onCopy={() => copyToClipboard(bankDetails.accountName, 'name')}
-            copied={copiedField === 'name'}
-          />
-          {bankDetails.branch && (
-            <InfoRow label="Chi nhánh" value={bankDetails.branch} />
-          )}
         </div>
-      </div>
-
-      {/* Transfer Content Template */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <h3 className="mb-3 font-semibold text-gray-900">Nội dung chuyển khoản</h3>
-        <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
-          <code className="text-sm font-medium text-gray-900">
-            {transferContent}
-          </code>
-          <button
-            onClick={() => copyToClipboard(transferContent, 'content')}
-            className="rounded-lg border border-gray-300 bg-white p-2 hover:bg-gray-50 transition-colors"
-          >
-            {copiedField === 'content' ? (
-              <Check className="h-4 w-4 text-green-600" />
-            ) : (
-              <Copy className="h-4 w-4 text-gray-600" />
-            )}
-          </button>
-        </div>
-        <p className="mt-2 text-xs text-gray-600">
-          * Sao chép toàn bộ nội dung này khi chuyển khoản
+        <p className="text-center text-sm text-gray-500 max-w-xs">
+          Sử dụng <strong>App Ngân hàng</strong> hoặc <strong>Ví điện tử</strong> để quét mã.
+          Thông tin chuyển khoản sẽ được điền tự động.
         </p>
       </div>
 
-      {/* Instructions */}
-      <div className="rounded-lg bg-amber-50 p-4">
-        <h4 className="mb-2 font-semibold text-amber-900">⚠️ Lưu ý quan trọng</h4>
-        <ul className="space-y-1 text-sm text-amber-800">
-          <li>• Chuyển khoản <strong>chính xác</strong> số tiền {formatCurrency(amount)}</li>
-          <li>• Ghi <strong>đúng mã thanh toán</strong> {paymentCode} vào nội dung</li>
-          <li>• Thanh toán sẽ được xác nhận trong vòng 24 giờ</li>
-          <li>• Liên hệ admin nếu có vấn đề</li>
-        </ul>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* 2. Manual Transfer Details */}
+        <div className="space-y-6">
+          {/* Payment Code */}
+          <div className="rounded-lg bg-blue-50 p-6">
+            <h3 className="mb-3 text-sm font-medium text-blue-900">
+              Mã thanh toán (Nội dung CK)
+            </h3>
+            <div className="flex items-center justify-between rounded-lg bg-white p-4 shadow-sm">
+              <div>
+                <p className="text-2xl font-bold text-blue-600 tracking-tight">{paymentCode}</p>
+                <p className="mt-1 text-xs text-blue-400 font-medium uppercase">
+                  Bắt buộc ghi đúng mã này
+                </p>
+              </div>
+              <button
+                onClick={() => copyToClipboard(paymentCode, 'code')}
+                className="rounded-lg bg-blue-100 p-2.5 text-blue-600 hover:bg-blue-200 transition-colors"
+                title="Sao chép"
+              >
+                {copiedField === 'code' ? (
+                  <Check className="h-5 w-5" />
+                ) : (
+                  <Copy className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Amount */}
+          <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500">Số tiền cần chuyển</p>
+                <p className="mt-1 text-3xl font-bold text-gray-900 tracking-tight">
+                  {formatCurrency(amount)}
+                </p>
+              </div>
+              <button
+                onClick={() => copyToClipboard(amount.toString(), 'amount')}
+                className="rounded-lg border border-gray-100 bg-gray-50 p-2.5 hover:bg-gray-100 transition-colors"
+              >
+                {copiedField === 'amount' ? (
+                  <Check className="h-5 w-5 text-green-600" />
+                ) : (
+                  <Copy className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Bank Account Info */}
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm h-full">
+          <h3 className="mb-4 font-bold text-gray-900 border-b border-gray-100 pb-2">
+            Thông tin tài khoản
+          </h3>
+          <div className="space-y-4">
+            <InfoRow
+              label="Ngân hàng"
+              value={bankDetails.bankName}
+              subValue={bankDetails.bankCode}
+              onCopy={() => copyToClipboard(bankDetails.bankName, 'bank')}
+              copied={copiedField === 'bank'}
+            />
+            <InfoRow
+              label="Số tài khoản"
+              value={bankDetails.accountNumber}
+
+              onCopy={() => copyToClipboard(bankDetails.accountNumber, 'account')}
+              copied={copiedField === 'account'}
+              important
+            />
+            <InfoRow
+              label="Chủ tài khoản"
+              value={bankDetails.accountName}
+              onCopy={() => copyToClipboard(bankDetails.accountName, 'name')}
+              copied={copiedField === 'name'}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Confirmation / Instructions */}
+      <div className="rounded-xl bg-amber-50 p-6 border border-amber-100">
+        <div className="flex gap-4">
+          <div className="p-3 bg-amber-100 rounded-full h-fit text-amber-600 shrink-0">
+            <Check className="h-6 w-6" />
+          </div>
+          <div>
+            <h4 className="text-lg font-bold text-amber-900">Xác nhận thanh toán</h4>
+            <p className="mt-1 text-sm text-amber-800 leading-relaxed">
+              Sau khi chuyển khoản thành công, hệ thống sẽ tự động ghi nhận trong vòng <strong>5-10 phút</strong>.
+              Nếu quá thời gian trên chưa thấy cập nhật, vui lòng liên hệ Admin và cung cấp <strong>Mã thanh toán</strong>.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
 
 function InfoRow({
   label,
@@ -165,17 +167,19 @@ function InfoRow({
 }: {
   label: string;
   value: string;
+  subValue?: string;
   onCopy?: () => void;
   copied?: boolean;
   important?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between group">
       <div>
-        <p className="text-xs text-gray-500">{label}</p>
-        <p className={`mt-0.5 font-medium ${important ? 'text-lg text-blue-600' : 'text-gray-900'}`}>
+        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">{label}</p>
+        <p className={`mt-0.5 font-bold ${important ? 'text-lg text-blue-600 tracking-tight' : 'text-gray-900'}`}>
           {value}
         </p>
+        {subValue && <p className="text-xs text-gray-400">{subValue}</p>}
       </div>
       {onCopy && (
         <button

@@ -14,7 +14,7 @@ export async function CustomerDashboardLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-[#09090b] text-white selection:bg-plex-yellow/30">
       {/* Sidebar */}
       <CustomerSidebar customer={customer} />
 

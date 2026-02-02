@@ -57,8 +57,8 @@ export function CustomerEmailChangeForm() {
       {message && (
         <div
           className={`rounded-lg p-4 text-sm ${message.type === 'success'
-              ? 'bg-green-50 text-green-800'
-              : 'bg-red-50 text-red-800'
+            ? 'bg-green-50 text-green-800'
+            : 'bg-red-50 text-red-800'
             }`}
         >
           {message.text}
@@ -66,7 +66,7 @@ export function CustomerEmailChangeForm() {
       )}
 
       <div>
-        <label htmlFor="new_email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="new_email" className="block text-sm font-medium text-gray-300">
           Email mới <span className="text-red-500">*</span>
         </label>
         <input
@@ -82,7 +82,7 @@ export function CustomerEmailChangeForm() {
       </div>
 
       <div>
-        <label htmlFor="confirm_email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="confirm_email" className="block text-sm font-medium text-gray-300">
           Xác nhận email mới <span className="text-red-500">*</span>
         </label>
         <input
@@ -98,7 +98,7 @@ export function CustomerEmailChangeForm() {
       </div>
 
       <div className="rounded-lg bg-blue-50 p-4">
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-300">
           <span className="font-medium">Lưu ý:</span> Sau khi nhấn gửi, bạn sẽ nhận được email
           xác nhận tại địa chỉ mới. Vui lòng kiểm tra hộp thư và xác nhận email trong vòng 24 giờ.
         </p>

@@ -71,7 +71,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
       )}
 
       <div>
-        <label htmlFor="full_name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="full_name" className="block text-sm font-medium text-gray-300">
           Họ và tên <span className="text-red-500">*</span>
         </label>
         <input
@@ -87,7 +87,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
             Số điện thoại 1
           </label>
           <input
@@ -103,7 +103,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
         </div>
 
         <div>
-          <label htmlFor="phone_2" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="phone_2" className="block text-sm font-medium text-gray-300">
             Số điện thoại 2
           </label>
           <input
@@ -120,7 +120,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
       </div>
 
       <div>
-        <label htmlFor="facebook_profile" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="facebook_profile" className="block text-sm font-medium text-gray-300">
           Facebook Profile
         </label>
         <input

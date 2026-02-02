@@ -86,11 +86,10 @@ export function CustomerAvatarUpload({ customer }: CustomerAvatarUploadProps) {
     <div>
       {message && (
         <div
-          className={`mb-4 rounded-lg p-4 text-sm ${
-            message.type === 'success'
+          className={`mb-4 rounded-lg p-4 text-sm ${message.type === 'success'
               ? 'bg-green-50 text-green-800'
               : 'bg-red-50 text-red-800'
-          }`}
+            }`}
         >
           {message.text}
         </div>
@@ -135,7 +134,7 @@ export function CustomerAvatarUpload({ customer }: CustomerAvatarUploadProps) {
           >
             {isUploading ? 'Đang tải lên...' : 'Chọn ảnh mới'}
           </button>
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs text-gray-400">
             JPG, PNG hoặc GIF. Tối đa 2MB.
           </p>
         </div>

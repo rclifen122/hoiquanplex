@@ -56,11 +56,10 @@ export function CustomerEmailChangeForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {message && (
         <div
-          className={`rounded-lg p-4 text-sm ${
-            message.type === 'success'
+          className={`rounded-lg p-4 text-sm ${message.type === 'success'
               ? 'bg-green-50 text-green-800'
               : 'bg-red-50 text-red-800'
-          }`}
+            }`}
         >
           {message.text}
         </div>
@@ -74,7 +73,7 @@ export function CustomerEmailChangeForm() {
           {...register('new_email')}
           type="email"
           id="new_email"
-          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900"
           placeholder="newemail@example.com"
         />
         {errors.new_email && (
@@ -90,7 +89,7 @@ export function CustomerEmailChangeForm() {
           {...register('confirm_email')}
           type="email"
           id="confirm_email"
-          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900"
           placeholder="newemail@example.com"
         />
         {errors.confirm_email && (

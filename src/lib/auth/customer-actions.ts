@@ -8,6 +8,7 @@ import { z } from 'zod';
 const updateProfileSchema = z.object({
   full_name: z.string().min(2, 'Tên phải có ít nhất 2 ký tự'),
   phone: z.string().optional(),
+  phone_2: z.string().optional(),
   facebook_profile: z.string().url('URL Facebook không hợp lệ').optional().or(z.literal('')),
 });
 
@@ -17,6 +18,7 @@ const updateProfileSchema = z.object({
 export async function updateCustomerProfile(data: {
   full_name: string;
   phone?: string;
+  phone_2?: string;
   facebook_profile?: string;
 }) {
   try {
@@ -42,6 +44,7 @@ export async function updateCustomerProfile(data: {
       .update({
         full_name: data.full_name,
         phone: data.phone || null,
+        phone_2: data.phone_2 || null,
         facebook_profile: data.facebook_profile || null,
         updated_at: new Date().toISOString(),
       })

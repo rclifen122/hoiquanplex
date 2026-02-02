@@ -148,7 +148,11 @@ export default async function AdminCustomersPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600">
-                          {customer.phone || '-'}
+                          <div>{customer.phone || '-'}</div>
+                          {/* Temporary using 'any' until DB types are regenerated */}
+                          {(customer as any).phone_2 && (
+                            <div className="text-xs text-gray-400 mt-1">{(customer as any).phone_2}</div>
+                          )}
                         </td>
                         <td className="px-6 py-4">
                           <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tierColors[customer.tier as keyof typeof tierColors]}`}>

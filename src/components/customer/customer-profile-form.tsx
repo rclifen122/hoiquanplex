@@ -10,6 +10,7 @@ import { Customer } from '@/lib/auth/customer-auth-helpers';
 const profileSchema = z.object({
   full_name: z.string().min(2, 'Tên phải có ít nhất 2 ký tự'),
   phone: z.string().optional(),
+  phone_2: z.string().optional(),
   facebook_profile: z.string().url('URL Facebook không hợp lệ').optional().or(z.literal('')),
 });
 
@@ -32,6 +33,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
     defaultValues: {
       full_name: customer.full_name,
       phone: customer.phone || '',
+      phone_2: (customer as any).phone_2 || '',
       facebook_profile: customer.facebook_profile || '',
     },
   });
@@ -59,11 +61,10 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {message && (
         <div
-          className={`rounded-lg p-4 text-sm ${
-            message.type === 'success'
+          className={`rounded-lg p-4 text-sm ${message.type === 'success'
               ? 'bg-green-50 text-green-800'
               : 'bg-red-50 text-red-800'
-          }`}
+            }`}
         >
           {message.text}
         </div>
@@ -84,20 +85,38 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
         )}
       </div>
 
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-          Số điện thoại
-        </label>
-        <input
-          {...register('phone')}
-          type="tel"
-          id="phone"
-          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          placeholder="0123456789"
-        />
-        {errors.phone && (
-          <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-        )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+            Số điện thoại 1
+          </label>
+          <input
+            {...register('phone')}
+            type="tel"
+            id="phone"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Số chính"
+          />
+          {errors.phone && (
+            <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="phone_2" className="block text-sm font-medium text-gray-700">
+            Số điện thoại 2
+          </label>
+          <input
+            {...register('phone_2')}
+            type="tel"
+            id="phone_2"
+            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Số phụ (nếu có)"
+          />
+          {errors.phone_2 && (
+            <p className="mt-1 text-sm text-red-600">{errors.phone_2.message}</p>
+          )}
+        </div>
       </div>
 
       <div>

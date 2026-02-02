@@ -84,9 +84,12 @@ export default async function AdminDashboardPage() {
   ];
 
   // Prepare Activity Feed
+  type PaymentItem = NonNullable<typeof recentPayments>[number];
+  type CustomerItem = NonNullable<typeof recentCustomers>[number];
+
   type ActivityItem =
-    | { type: 'payment'; data: typeof recentPayments[0]; created_at: string }
-    | { type: 'customer'; data: typeof recentCustomers[0]; created_at: string };
+    | { type: 'payment'; data: PaymentItem; created_at: string }
+    | { type: 'customer'; data: CustomerItem; created_at: string };
 
   const activities: ActivityItem[] = [
     ...(recentPayments || []).map(p => ({ type: 'payment' as const, data: p, created_at: p.created_at })),

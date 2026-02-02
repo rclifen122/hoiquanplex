@@ -149,54 +149,58 @@ export default async function AdminCustomersPage() {
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600">
                           <div>{customer.phone || '-'}</div>
-                          {/* Temporary using 'any' until DB types are regenerated */}
-                          {(customer as any).phone_2 && (
-                            <div className="text-xs text-gray-400 mt-1">{(customer as any).phone_2}</div>
-                          )}
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tierColors[customer.tier as keyof typeof tierColors]}`}>
-                            {tierLabels[customer.tier as keyof typeof tierLabels]}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[customer.status as keyof typeof statusColors]}`}>
-                            {customer.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">
-                          {activeSubscription ? (
-                            <div>
-                              <div className="font-medium">
-                                {(activeSubscription.plan as { name: string })?.name || 'N/A'}
+                          <td className="px-6 py-4 text-sm text-gray-600">
+                            <div>{customer.phone || '-'}</div>
+                            {/* Use extended type locally until DB types are regenerated */}
+                            {(customer as unknown as { phone_2?: string }).phone_2 && (
+                              <div className="text-xs text-gray-400 mt-1">
+                                {(customer as unknown as { phone_2?: string }).phone_2}
                               </div>
-                              <div className="text-xs text-gray-500">
-                                Until {formatDate((activeSubscription as { end_date: string }).end_date)}
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${tierColors[customer.tier as keyof typeof tierColors]}`}>
+                              {tierLabels[customer.tier as keyof typeof tierLabels]}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[customer.status as keyof typeof statusColors]}`}>
+                              {customer.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-600">
+                            {activeSubscription ? (
+                              <div>
+                                <div className="font-medium">
+                                  {(activeSubscription.plan as { name: string })?.name || 'N/A'}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  Until {formatDate((activeSubscription as { end_date: string }).end_date)}
+                                </div>
                               </div>
+                            ) : (
+                              <span className="text-gray-400">No active subscription</span>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-600">
+                            {formatDate(customer.created_at)}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm">
+                            <div className="flex space-x-2">
+                              <Link
+                                href={`/admin/customers/${customer.id}`}
+                                className="text-blue-600 hover:text-blue-500"
+                              >
+                                View
+                              </Link>
+                              <Link
+                                href={`/admin/customers/${customer.id}/edit`}
+                                className="text-gray-600 hover:text-gray-500"
+                              >
+                                Edit
+                              </Link>
                             </div>
-                          ) : (
-                            <span className="text-gray-400">No active subscription</span>
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-600">
-                          {formatDate(customer.created_at)}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-4 text-sm">
-                          <div className="flex space-x-2">
-                            <Link
-                              href={`/admin/customers/${customer.id}`}
-                              className="text-blue-600 hover:text-blue-500"
-                            >
-                              View
-                            </Link>
-                            <Link
-                              href={`/admin/customers/${customer.id}/edit`}
-                              className="text-gray-600 hover:text-gray-500"
-                            >
-                              Edit
-                            </Link>
-                          </div>
-                        </td>
+                          </td>
                       </tr>
                     );
                   })

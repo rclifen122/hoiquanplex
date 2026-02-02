@@ -33,7 +33,7 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
     defaultValues: {
       full_name: customer.full_name,
       phone: customer.phone || '',
-      phone_2: (customer as any).phone_2 || '',
+      phone_2: (customer as Customer & { phone_2?: string }).phone_2 || '',
       facebook_profile: customer.facebook_profile || '',
     },
   });
@@ -62,8 +62,8 @@ export function CustomerProfileForm({ customer }: CustomerProfileFormProps) {
       {message && (
         <div
           className={`rounded-lg p-4 text-sm ${message.type === 'success'
-              ? 'bg-green-50 text-green-800'
-              : 'bg-red-50 text-red-800'
+            ? 'bg-green-50 text-green-800'
+            : 'bg-red-50 text-red-800'
             }`}
         >
           {message.text}

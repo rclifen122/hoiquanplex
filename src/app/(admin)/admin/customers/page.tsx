@@ -1,10 +1,10 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/server';
 import { formatDate } from '@/lib/utils/format';
 import Link from 'next/link';
 
 export default async function AdminCustomersPage() {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   // Fetch all customers with their subscription info
   const { data: customers } = await supabase

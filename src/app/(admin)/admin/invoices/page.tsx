@@ -2,7 +2,7 @@ import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout
 import { createAdminClient } from '@/lib/supabase/server';
 import { formatCurrency, formatDateTime } from '@/lib/utils/format';
 import { Button } from '@/components/ui/button';
-import { FileText, Download, Send, Search } from 'lucide-react';
+import { Download, Send, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 export default async function InvoicesPage() {

@@ -1,5 +1,5 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { Users, PackagePlus, CreditCard, ArrowUpRight, Activity, DollarSign, UserPlus, CheckCircle2 } from 'lucide-react';
+import { Users, PackagePlus, CreditCard, ArrowUpRight, Activity, DollarSign, CheckCircle2 } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/server';
 import { formatCurrency } from '@/lib/utils/format';
 import Link from 'next/link';

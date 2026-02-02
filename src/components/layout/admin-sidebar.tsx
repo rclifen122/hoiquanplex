@@ -9,7 +9,6 @@ import {
   FileText,
   Mail,
   Settings,
-  PackagePlus,
   BarChart3
 } from 'lucide-react';
 

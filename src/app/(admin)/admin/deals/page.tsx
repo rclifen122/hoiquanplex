@@ -1,7 +1,6 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
 import { createAdminClient } from '@/lib/supabase/server';
 import { formatCurrency, formatDateTime } from '@/lib/utils/format';
-import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

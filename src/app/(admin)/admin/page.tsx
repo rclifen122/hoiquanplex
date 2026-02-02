@@ -1,8 +1,9 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
-import { Users, PackagePlus, CreditCard, ArrowUpRight, Activity, DollarSign } from 'lucide-react';
+import { Users, PackagePlus, CreditCard, ArrowUpRight, Activity, DollarSign, UserPlus, CheckCircle2 } from 'lucide-react';
 import { createAdminClient } from '@/lib/supabase/server';
 import { formatCurrency } from '@/lib/utils/format';
 import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,13 +27,20 @@ export default async function AdminDashboardPage() {
     .select('*', { count: 'exact', head: true })
     .eq('status', 'pending');
 
-  // 4. Revenue Estimate
+  // 4. Revenue Estimate & Recent Payments
   const { data: recentPayments } = await supabase
     .from('payments')
-    .select('amount')
+    .select('*, customer:customers(full_name)')
     .eq('status', 'completed')
     .order('created_at', { ascending: false })
-    .limit(100);
+    .limit(10);
+
+  // 5. Recent Customers
+  const { data: recentCustomers } = await supabase
+    .from('customers')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(5);
 
   const estimatedRevenue = (recentPayments || []).reduce((sum: number, p: { amount: number | null }) => sum + Number(p?.amount || 0), 0);
 
@@ -74,6 +82,17 @@ export default async function AdminDashboardPage() {
       iconColor: 'text-amber-100',
     },
   ];
+
+  // Prepare Activity Feed
+  type ActivityItem =
+    | { type: 'payment'; data: typeof recentPayments[0]; created_at: string }
+    | { type: 'customer'; data: typeof recentCustomers[0]; created_at: string };
+
+  const activities: ActivityItem[] = [
+    ...(recentPayments || []).map(p => ({ type: 'payment' as const, data: p, created_at: p.created_at })),
+    ...(recentCustomers || []).map(c => ({ type: 'customer' as const, data: c, created_at: c.created_at })),
+  ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 7);
 
   return (
     <AdminDashboardLayout>
@@ -136,7 +155,7 @@ export default async function AdminDashboardPage() {
           })}
         </div>
 
-        {/* Main Content Area: Quick Actions & Activity */}
+        {/* Main Content Area */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
           {/* Quick Actions Panel */}
@@ -183,25 +202,80 @@ export default async function AdminDashboardPage() {
                 </div>
               </Link>
             </div>
+
+            {/* Recent Customers Mini-List */}
+            <div className="mt-8">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-white">Recent Signups</h3>
+                <Link href="/admin/customers" className="text-xs text-blue-400 hover:text-blue-300">View All</Link>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/5 overflow-hidden">
+                <div className="divide-y divide-white/5">
+                  {recentCustomers?.map((customer) => (
+                    <div key={customer.id} className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs ring-1 ring-blue-500/30">
+                          {customer.full_name?.substring(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-200 text-sm">{customer.full_name}</p>
+                          <p className="text-xs text-gray-500">{customer.email}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className={`text-xs px-2 py-1 rounded-full bg-white/5 ${customer.tier === 'pro' ? 'text-purple-400' : 'text-gray-400'}`}>
+                          {customer.tier}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  {(!recentCustomers || recentCustomers.length === 0) && (
+                    <div className="p-4 text-center text-gray-500 text-sm">No recent signups</div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* System Status / Mini Feed (Visual Placeholder) */}
-          <div className="rounded-2xl border border-white/5 bg-black/40 p-6 backdrop-blur-md">
-            <h3 className="font-bold text-white mb-4">System Activity</h3>
-            <div className="space-y-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-                  <div className="h-2 w-2 rounded-full bg-plex-yellow"></div>
+          {/* System Activity Feed */}
+          <div className="rounded-2xl border border-white/5 bg-black/40 p-6 backdrop-blur-md h-fit">
+            <h3 className="font-bold text-white mb-4 flex items-center justify-between">
+              <span>System Activity</span>
+              <span className="text-xs font-normal text-gray-500">Live Feed</span>
+            </h3>
+
+            <div className="space-y-0 relative border-l border-white/10 ml-2">
+              {activities.length > 0 ? activities.map((item, i) => (
+                <div key={i} className="flex gap-4 pl-6 pb-6 relative group">
+                  {/* Timeline dot */}
+                  <div className={`absolute -left-[5px] top-1 h-2.5 w-2.5 rounded-full ring-4 ring-black 
+                    ${item.type === 'payment' ? 'bg-emerald-500' : 'bg-blue-500'}`}></div>
+
                   <div className="flex-1 space-y-1">
-                    <div className="h-1.5 w-24 rounded-full bg-white/20"></div>
-                    <div className="h-1.5 w-16 rounded-full bg-white/10"></div>
+                    <p className="text-sm font-medium text-gray-200">
+                      {item.type === 'payment' ? (
+                        <>
+                          Payment of <span className="text-emerald-400">{formatCurrency(item.data.amount)}</span> received
+                        </>
+                      ) : (
+                        <>
+                          New customer <span className="text-blue-400">{item.data.full_name}</span> registered
+                        </>
+                      )}
+                    </p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                      {formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}
+                      {item.type === 'payment' && <CheckCircle2 className="h-3 w-3 text-emerald-500 ml-1" />}
+                    </p>
                   </div>
-                  <div className="text-xs text-gray-600">2m ago</div>
                 </div>
-              ))}
+              )) : (
+                <div className="pl-6 pb-2 text-sm text-gray-500 italic">No recent activity</div>
+              )}
             </div>
-            <div className="mt-6 pt-4 border-t border-white/5">
-              <p className="text-xs text-center text-gray-500">Real-time monitoring active</p>
+
+            <div className="mt-2 pt-4 border-t border-white/5">
+              <p className="text-xs text-center text-gray-500">Monitoring last 24h activity</p>
             </div>
           </div>
 

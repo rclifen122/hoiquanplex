@@ -52,9 +52,9 @@ export default async function AdminCustomersPage() {
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Customers</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Contacts List</h1>
             <p className="mt-1 text-sm text-gray-600">
-              Manage customer accounts and subscriptions
+              Manage leads and customer identities
             </p>
           </div>
           <Link

@@ -16,10 +16,9 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-  { name: 'Customers', href: '/admin/customers', icon: Users },
-  { name: 'Subscriptions', href: '/admin/subscriptions', icon: PackagePlus },
-  { name: 'Payments', href: '/admin/payments', icon: CreditCard },
-  { name: 'Forms', href: '/admin/forms', icon: FileText },
+  { name: 'Contacts', href: '/admin/customers', icon: Users }, // Renamed from Customers
+  { name: 'Deals', href: '/admin/deals', icon: CreditCard }, // New Consolidated View
+  { name: 'Invoices', href: '/admin/invoices', icon: FileText }, // New Feature
   { name: 'Emails', href: '/admin/emails', icon: Mail },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
@@ -45,8 +44,8 @@ export function AdminSidebar() {
               key={item.name}
               href={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold transition-all duration-200 ${isActive
-                  ? 'bg-plex-yellow text-black shadow-lg shadow-plex-yellow/20'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                ? 'bg-plex-yellow text-black shadow-lg shadow-plex-yellow/20'
+                : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
             >
               <Icon className={`h-5 w-5 ${isActive ? 'text-black' : 'text-gray-500 group-hover:text-white'}`} />

@@ -39,6 +39,9 @@ export default async function CustomerDashboardPage() {
     suspended: 'Suspended',
   };
 
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+
   return (
     <CustomerDashboardLayout>
       <div className="space-y-8 animate-in fade-in duration-700">
@@ -48,7 +51,7 @@ export default async function CustomerDashboardPage() {
           <div className="absolute top-0 right-0 p-32 bg-plex-yellow/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
           <div className="relative z-10">
             <h1 className="text-4xl font-black text-white glow-text mb-2">
-              Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{customer?.full_name}</span>
+              {greeting}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{customer?.full_name}</span>
             </h1>
             <p className="text-lg text-gray-300 max-w-xl leading-relaxed">
               Welcome to your personal dashboard. Your entertainment center is ready.
@@ -93,6 +96,11 @@ export default async function CustomerDashboardPage() {
                 <p className="mt-2 text-2xl font-black text-white">
                   {subscription ? subscription.plan.name : 'Free Access'}
                 </p>
+                {subscription && (
+                  <p className="text-xs text-gray-400 mt-1">
+                    Renews: {new Date(subscription.current_period_end).toLocaleDateString('vi-VN')}
+                  </p>
+                )}
               </div>
               <div className="rounded-xl bg-purple-500/20 p-3 ring-1 ring-purple-500/40">
                 {subscription ? <ShieldCheck className="h-6 w-6 text-purple-400" /> : <Package className="h-6 w-6 text-purple-400" />}

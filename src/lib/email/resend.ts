@@ -23,7 +23,6 @@ export const EmailType = {
   RENEWAL_SUCCESS: 'renewal_success',
   PAYMENT_FAILED: 'payment_failed',
   SUBSCRIPTION_EXPIRED: 'subscription_expired',
-  SUBSCRIPTION_EXPIRED: 'subscription_expired',
   SUBSCRIPTION_CANCELLED: 'subscription_cancelled',
   CUSTOM: 'custom',
   ADMIN_NOTIFICATION: 'admin_notification',

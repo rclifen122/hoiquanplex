@@ -54,7 +54,7 @@ export function SubscriptionEditForm({ subscription }: { subscription: Subscript
 
             router.push('/admin/subscriptions');
             router.refresh(); // Refresh server components
-        } catch (e) {
+        } catch {
             alert('Error cancelling subscription');
         } finally {
             setIsLoading(false);

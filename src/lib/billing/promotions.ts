@@ -2,7 +2,8 @@ import { createClient } from '@/lib/supabase/server';
 
 export interface CouponValidationResult {
     valid: boolean;
-    promotion?: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    promotion?: any;
     error?: string;
     finalAmount?: number;
     discountAmount?: number;

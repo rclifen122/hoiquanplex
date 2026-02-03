@@ -109,7 +109,8 @@ export default async function SubscriptionDetailPage({ params }: { params: { id:
                 {!payments || payments.length === 0 ? (
                   <tr><td colSpan={4} className="px-6 py-4 text-center text-sm text-gray-500">No payments found</td></tr>
                 ) : (
-                  payments.map((payment: Record<string, any>) => (
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  payments.map((payment: any) => (
                     <tr key={payment.id}>
                       <td className="px-6 py-4 text-sm text-gray-900">{formatDate(payment.created_at)}</td>
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">

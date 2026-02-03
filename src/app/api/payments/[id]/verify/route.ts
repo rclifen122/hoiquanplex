@@ -143,31 +143,57 @@ export async function POST(
       subscriptionEndDate.setMonth(subscriptionEndDate.getMonth() + 1);
 
       if (payment.metadata && payment.metadata.plan_id) {
-        // ... (plan logic)
         const planId = payment.metadata.plan_id as string;
-        const durationMonths = payment.metadata.duration_months as number;
+        const durationMonths = Number(payment.metadata.duration_months || 1);
         const tier = payment.metadata.tier as string;
         planName = payment.metadata.plan_name as string;
 
+        // Calculate End Date
         const startDate = new Date();
         const endDate = new Date();
         endDate.setMonth(endDate.getMonth() + durationMonths);
         subscriptionEndDate = endDate;
 
-        const { error: subError } = await supabase
+        // Check for existing subscription (Upsert Logic)
+        const { data: existingSub } = await supabase
           .from('subscriptions')
-          .insert({
-            customer_id: payment.customer_id,
-            plan_id: planId,
-            tier,
-            status: 'active',
-            start_date: startDate.toISOString(),
-            end_date: endDate.toISOString(),
-            auto_renew: true,
-          });
+          .select('id')
+          .eq('customer_id', payment.customer_id)
+          .neq('status', 'cancelled') // Update active or expired, but usually we just want to find The subscription
+          .limit(1)
+          .maybeSingle();
 
-        if (subError) {
-          console.error('Verify API: Failed to create subscription:', subError);
+        if (existingSub) {
+          console.log(`Verify API: Updating existing subscription ${existingSub.id}`);
+          const { error: updateError } = await supabase
+            .from('subscriptions')
+            .update({
+              plan_id: planId,
+              tier: tier,
+              status: 'active',
+              start_date: startDate.toISOString(),
+              end_date: endDate.toISOString(),
+              auto_renew: true,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', existingSub.id);
+
+          if (updateError) console.error('Verify API: Failed to update subscription:', updateError);
+        } else {
+          console.log('Verify API: Creating new subscription');
+          const { error: insertError } = await supabase
+            .from('subscriptions')
+            .insert({
+              customer_id: payment.customer_id,
+              plan_id: planId,
+              tier: tier,
+              status: 'active',
+              start_date: startDate.toISOString(),
+              end_date: endDate.toISOString(),
+              auto_renew: true,
+            });
+
+          if (insertError) console.error('Verify API: Failed to insert subscription:', insertError);
         }
 
         // Update customer tier

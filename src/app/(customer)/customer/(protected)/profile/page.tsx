@@ -15,13 +15,17 @@ export default async function CustomerProfilePage() {
   const tierLabels = {
     free: 'Free',
     basic: 'Basic',
+    plus: 'Plus',
     pro: 'Pro',
+    max: 'Max',
   };
 
   const tierColors = {
     free: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
     basic: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    plus: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
     pro: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    max: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
   };
 
   return (

@@ -83,17 +83,26 @@ export async function POST(req: NextRequest) {
 
         if (insertError) throw insertError;
 
-        // 4. Send Email to Admin (TODO: Implement actual email sending)
+        // 4. Send Email to Admin
         console.log(`Downgrade Request: User ${customer.email} wants refund ${refundAmount}`);
 
-        // Notify Admin via Email (Mocked for now)
-        /*
-        await sendEmail({
-            to: 'admin@hoiquanplex.com',
-            subject: 'Yêu cầu hoàn tiền (Downgrade)',
-            html: `<p>Khách hàng ${customer.full_name} muốn hạ cấp gói...</p>`
-        });
-        */
+        try {
+            await sendEmail({
+                to: process.env.ADMIN_EMAIL || 'support@hoiquanplex.site',
+                subject: `[ACTION REQUIRED] Yêu cầu hoàn tiền - ${customer.email}`,
+                html: adminRefundAlertTemplate({
+                    customerName: customer.full_name || 'N/A',
+                    customerEmail: customer.email,
+                    oldPlanName: activeSub.plan.name,
+                    newPlanName: newPlan.name,
+                    refundAmount: refundAmount,
+                    reason: 'Downgrade Request'
+                }),
+                emailType: EmailType.ADMIN_NOTIFICATION,
+            });
+        } catch (emailError) {
+            console.error('Failed to send admin email:', emailError);
+        }
 
         return NextResponse.json({ success: true, refundAmount });
 

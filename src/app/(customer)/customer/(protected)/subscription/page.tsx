@@ -10,12 +10,22 @@ export default async function CustomerSubscriptionPage() {
   const supabase = await createClient();
 
   // Fetch available plans
-  const { data: plans } = await supabase
+  const { data: rawPlans } = await supabase
     .from('subscription_plans')
     .select('*')
     .eq('is_active', true)
     .eq('subscription_type', 'account')
     .order('price', { ascending: true });
+
+  // Filter and enhance plans
+  // 1. Remove 1 month plan (assuming price < 100,000 VND based on pricing section which says 60k)
+  // 2. Highlight 12 month plan (highest price)
+  const plans = (rawPlans || [])
+    .filter(p => p.price > 100000)
+    .map((p, index, array) => ({
+      ...p,
+      highlighted: index === array.length - 1 // Last item is most expensive (ascending sort)
+    }));
 
   const activePlanId = subscription?.plan_id;
 

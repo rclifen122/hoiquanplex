@@ -7,7 +7,7 @@ export interface Customer {
   full_name: string;
   phone: string | null;
   facebook_profile: string | null;
-  tier: 'free' | 'basic' | 'pro';
+  tier: 'free' | 'basic' | 'plus' | 'pro' | 'max';
   status: 'active' | 'inactive' | 'suspended';
   avatar_url: string | null;
   registration_source: 'form_a' | 'form_b' | 'manual' | null;

@@ -36,7 +36,9 @@ export default async function CustomerDashboardPage() {
   const tierLabels = {
     free: 'Free Explorer',
     basic: 'Basic Member',
+    plus: 'Plus Member',
     pro: 'Pro VIP',
+    max: 'Max Elite',
   };
 
   const statusLabels = {

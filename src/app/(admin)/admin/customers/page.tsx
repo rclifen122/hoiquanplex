@@ -31,13 +31,17 @@ export default async function AdminCustomersPage() {
   const tierLabels = {
     free: 'Free',
     basic: 'Basic',
+    plus: 'Plus',
     pro: 'Pro',
+    max: 'Max',
   };
 
   const tierColors = {
     free: 'bg-gray-100 text-gray-800',
     basic: 'bg-blue-100 text-blue-800',
+    plus: 'bg-cyan-100 text-cyan-800',
     pro: 'bg-purple-100 text-purple-800',
+    max: 'bg-yellow-100 text-yellow-800',
   };
 
   const statusColors = {

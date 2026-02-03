@@ -14,22 +14,7 @@ interface Plan {
 
 const plans: Plan[] = [
     {
-        name: '01 Tháng',
-        price: '60.000₫',
-        period: '/tháng',
-        description: 'Trải nghiệm linh hoạt',
-        features: [
-            'Tất cả nội dung Premium',
-            'Chất lượng 4K HDR',
-            'Không quảng cáo',
-            'Xem trên mọi thiết bị',
-        ],
-        cta: 'Chọn gói 1 tháng',
-        href: '/customer/login?redirect=/customer/subscription',
-        highlighted: false,
-    },
-    {
-        name: '03 Tháng',
+        name: 'Plus (3 Tháng)',
         price: '180.000₫',
         period: '/3 tháng',
         description: 'Tiết kiệm thời gian gia hạn',
@@ -39,12 +24,12 @@ const plans: Plan[] = [
             'Không quảng cáo',
             'Xem trên mọi thiết bị',
         ],
-        cta: 'Chọn gói 3 tháng',
+        cta: 'Chọn gói Plus',
         href: '/customer/login?redirect=/customer/subscription',
         highlighted: false,
     },
     {
-        name: '06 Tháng',
+        name: 'Pro (6 Tháng)',
         price: '330.000₫',
         period: '/6 tháng',
         description: 'Tiết kiệm 30.000đ',
@@ -55,12 +40,12 @@ const plans: Plan[] = [
             'Xem trên mọi thiết bị',
             'Ưu tiên hỗ trợ',
         ],
-        cta: 'Chọn gói 6 tháng',
+        cta: 'Chọn gói Pro',
         href: '/customer/login?redirect=/customer/subscription',
-        highlighted: true,
+        highlighted: false,
     },
     {
-        name: '12 Tháng',
+        name: 'Max (12 Tháng)',
         price: '600.000₫',
         period: '/năm',
         description: 'Tiết kiệm 120.000đ (Best Deal)',
@@ -71,9 +56,9 @@ const plans: Plan[] = [
             'Xem trên mọi thiết bị',
             'Hỗ trợ VIP 24/7',
         ],
-        cta: 'Chọn gói 1 năm',
+        cta: 'Chọn gói Max',
         href: '/customer/login?redirect=/customer/subscription',
-        highlighted: false,
+        highlighted: true,
     },
 ];
 

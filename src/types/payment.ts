@@ -92,6 +92,7 @@ export const createPaymentSchema = z.object({
   plan_id: z.string().uuid(),
   amount: z.number().positive(),
   payment_method: z.enum(['bank_transfer', 'vnpay', 'momo', 'zalopay']),
+  coupon_code: z.string().optional(),
 });
 
 export type CreatePaymentInput = z.infer<typeof createPaymentSchema>;

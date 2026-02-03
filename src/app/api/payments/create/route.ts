@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { generatePaymentCode } from '@/lib/utils/payment-code';
 import { createPaymentSchema } from '@/types/payment';
+import { validateCoupon } from '@/lib/billing/promotions';
 
 /**
  * POST /api/payments/create
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { customer_id, plan_id, amount, payment_method } = validationResult.data;
+    const { customer_id, plan_id, payment_method, coupon_code } = validationResult.data;
 
     const supabase = await createClient();
 
@@ -51,6 +52,20 @@ export async function POST(request: NextRequest) {
         { error: 'Subscription plan not found or inactive' },
         { status: 404 }
       );
+    }
+
+    let finalAmount = plan.price;
+    let discountAmount = 0;
+    let promotionId = null;
+
+    if (coupon_code) {
+      const validation = await validateCoupon(coupon_code, plan.price, customer_id);
+      if (!validation.valid) {
+        return NextResponse.json({ error: validation.error }, { status: 400 });
+      }
+      finalAmount = validation.finalAmount!;
+      discountAmount = validation.discountAmount!;
+      promotionId = validation.promotion?.id || null;
     }
 
     // Generate unique payment code (with retry logic)
@@ -93,7 +108,10 @@ export async function POST(request: NextRequest) {
       .from('payments')
       .insert({
         customer_id,
-        amount,
+        amount: finalAmount,
+        original_amount: plan.price,
+        discount_amount: discountAmount,
+        promotion_id: promotionId,
         currency: 'VND',
         status: 'pending',
         payment_method,
@@ -105,6 +123,7 @@ export async function POST(request: NextRequest) {
           plan_slug: plan.slug,
           tier: plan.tier,
           duration_months: plan.duration_months,
+          coupon_code: coupon_code || null,
         },
       })
       .select()

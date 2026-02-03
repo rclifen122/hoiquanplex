@@ -9,15 +9,19 @@ import {
   FileText,
   Mail,
   Settings,
-  BarChart3
+  BarChart3,
+  Tag,
+  Crown
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Contacts', href: '/admin/customers', icon: Users }, // Renamed from Customers
+  { name: 'Subscriptions', href: '/admin/subscriptions', icon: Crown },
   { name: 'Deals', href: '/admin/deals', icon: CreditCard }, // New Consolidated View
   { name: 'Invoices', href: '/admin/invoices', icon: FileText }, // New Feature
+  { name: 'Promotions', href: '/admin/promotions', icon: Tag },
   { name: 'Emails', href: '/admin/emails', icon: Mail },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];

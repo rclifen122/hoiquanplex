@@ -118,7 +118,7 @@ export default async function CustomerSubscriptionPage() {
 
           <PlanSelection
             plans={(plans as Plan[]) || []}
-            currentPlanId={activePlanId}
+            activeSubscription={subscription}
           />
         </div>
       </div>

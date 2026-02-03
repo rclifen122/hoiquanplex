@@ -15,6 +15,7 @@ export interface Plan {
     features: string[];
     tier: string;
     highlighted?: boolean;
+    durationTitle?: string; // New optional field for display
 }
 
 interface PlanSelectionProps {
@@ -85,9 +86,14 @@ export function PlanSelection({ plans, currentPlanId }: PlanSelectionProps) {
                         )}
 
                         <div className="mb-6">
-                            <h3 className={cn("text-xl font-bold", plan.highlighted ? "text-plex-yellow" : "text-white")}>
+                            <h3 className={cn("text-2xl font-black uppercase tracking-tight", plan.highlighted ? "text-plex-yellow" : "text-white")}>
                                 {plan.name}
                             </h3>
+                            {plan.durationTitle && (
+                                <p className={cn("text-lg font-bold mt-1", plan.highlighted ? "text-plex-yellow/80" : "text-gray-400")}>
+                                    {plan.durationTitle}
+                                </p>
+                            )}
                             <div className="mt-4 flex items-baseline">
                                 <span className="text-4xl font-bold tracking-tight text-white">
                                     {formatCurrency(plan.price)}

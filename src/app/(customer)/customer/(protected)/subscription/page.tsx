@@ -18,14 +18,26 @@ export default async function CustomerSubscriptionPage() {
     .order('price', { ascending: true });
 
   // Filter and enhance plans
-  // 1. Remove 1 month plan (assuming price < 100,000 VND based on pricing section which says 60k)
-  // 2. Highlight 12 month plan (highest price)
+  // 1. Remove 1 month plan (price < 100k)
+  // 2. Highlight 12 month plan
+  // 3. Parse Name/Duration for new UI layout (e.g. "Plus 3 Tháng" -> Name: "Plus", Duration: "3 Tháng")
   const plans = (rawPlans || [])
     .filter(p => p.price > 100000)
-    .map((p, index, array) => ({
-      ...p,
-      highlighted: index === array.length - 1 // Last item is most expensive (ascending sort)
-    }));
+    .map((p, index, array) => {
+      // Simple parse: Assumes format "Name Duration..."
+      // We want "Plus" and "3 Tháng"
+      // Regex: First word is Name (Plus/Pro/Max), rest is Duration
+      const match = p.name.match(/^(\w+)\s+(.+)$/);
+      const displayName = match ? match[1] : p.name;
+      const displayDuration = match ? match[2] : undefined;
+
+      return {
+        ...p,
+        name: displayName,
+        durationTitle: displayDuration,
+        highlighted: index === array.length - 1
+      };
+    });
 
   const activePlanId = subscription?.plan_id;
 

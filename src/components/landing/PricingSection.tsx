@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 
 interface Plan {
     name: string;
+    durationTitle: string; // New field
     price: string;
     period?: string;
     description: string;
@@ -14,7 +15,8 @@ interface Plan {
 
 const plans: Plan[] = [
     {
-        name: 'Plus (3 Tháng)',
+        name: 'Plus',
+        durationTitle: '3 Tháng',
         price: '180.000₫',
         period: '/3 tháng',
         description: 'Tiết kiệm thời gian gia hạn',
@@ -29,7 +31,8 @@ const plans: Plan[] = [
         highlighted: false,
     },
     {
-        name: 'Pro (6 Tháng)',
+        name: 'Pro',
+        durationTitle: '6 Tháng',
         price: '330.000₫',
         period: '/6 tháng',
         description: 'Tiết kiệm 30.000đ',
@@ -45,7 +48,8 @@ const plans: Plan[] = [
         highlighted: false,
     },
     {
-        name: 'Max (12 Tháng)',
+        name: 'Max',
+        durationTitle: '12 Tháng',
         price: '600.000₫',
         period: '/năm',
         description: 'Tiết kiệm 120.000đ (Best Deal)',
@@ -72,7 +76,7 @@ export function PricingSection() {
                     <p className="mt-4 text-gray-400">Đăng ký dễ dàng, hủy gói bất cứ lúc nào bạn muốn.</p>
                 </div>
 
-                <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
 
                     {plans.map((plan) => (
                         <div
@@ -89,7 +93,8 @@ export function PricingSection() {
                             )}
                             <div className="mb-8">
                                 <h3 className="text-2xl font-black uppercase tracking-tight">{plan.name}</h3>
-                                <p className={`mt-2 text-sm ${plan.highlighted ? 'text-black/70' : 'text-gray-400'}`}>{plan.description}</p>
+                                <p className={`text-lg font-bold ${plan.highlighted ? 'text-black/70' : 'text-gray-400'}`}>{plan.durationTitle}</p>
+                                <p className={`mt-2 text-sm ${plan.highlighted ? 'text-black/60' : 'text-gray-500'}`}>{plan.description}</p>
                             </div>
 
                             <div className="mb-8 overflow-hidden">

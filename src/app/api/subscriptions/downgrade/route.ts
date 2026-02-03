@@ -3,8 +3,8 @@ import { createClient } from '@/lib/supabase/server';
 import { getCustomer } from '@/lib/auth/customer-auth-helpers';
 import { calculateUpgradeCost } from '@/lib/billing/proration';
 import { sendEmail } from '@/lib/email/send-email';
-// IMPORTANT: You need to create this template or use a generic one
-// import { AdminRefundAlertEmail } from '@/lib/email/templates/admin-refund-alert'; 
+import { adminRefundAlertTemplate } from '@/lib/email/templates/admin-refund-alert';
+import { EmailType } from '@/lib/email/resend';
 
 export async function POST(req: NextRequest) {
     try {

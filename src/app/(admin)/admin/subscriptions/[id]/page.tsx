@@ -1,7 +1,7 @@
 import { AdminDashboardLayout } from '@/components/layout/admin-dashboard-layout';
 import { createAdminClient } from '@/lib/supabase/server';
-import { formatDate, formatCurrency } from '@/lib/utils/format';
-import { ArrowLeft, Edit, AlertTriangle } from 'lucide-react';
+import { formatDate } from '@/lib/utils/format';
+import { ArrowLeft, Edit } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -62,7 +62,7 @@ export default async function SubscriptionDetailPage({ params }: { params: { id:
               <p className="text-sm text-gray-500">ID: {subscription.id}</p>
             </div>
             <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${subscription.status === 'active' ? 'bg-green-100 text-green-800' :
-                subscription.status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+              subscription.status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
               }`}>
               {subscription.status.toUpperCase()}
             </span>
@@ -109,7 +109,7 @@ export default async function SubscriptionDetailPage({ params }: { params: { id:
                 {!payments || payments.length === 0 ? (
                   <tr><td colSpan={4} className="px-6 py-4 text-center text-sm text-gray-500">No payments found</td></tr>
                 ) : (
-                  payments.map((payment: any) => (
+                  payments.map((payment: Record<string, any>) => (
                     <tr key={payment.id}>
                       <td className="px-6 py-4 text-sm text-gray-900">{formatDate(payment.created_at)}</td>
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">
@@ -117,8 +117,8 @@ export default async function SubscriptionDetailPage({ params }: { params: { id:
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${payment.status === 'succeeded' ? 'bg-green-100 text-green-800' :
-                            payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-red-100 text-red-800'
+                          payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
                           }`}>
                           {payment.status}
                         </span>

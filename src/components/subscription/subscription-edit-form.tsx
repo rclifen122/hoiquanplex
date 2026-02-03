@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, AlertTriangle, Calculator, Ban, CalendarOff } from 'lucide-react';
+import { ArrowLeft, Calculator, Ban } from 'lucide-react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils/format';
 import { calculateRemainingValue } from '@/lib/billing/proration'; // Using generic func

@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export interface CouponValidationResult {
     valid: boolean;
-    promotion?: any;
+    promotion?: Record<string, any>;
     error?: string;
     finalAmount?: number;
     discountAmount?: number;

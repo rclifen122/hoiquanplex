@@ -39,7 +39,7 @@ export default async function CustomerSubscriptionPage() {
       };
     });
 
-  const activePlanId = subscription?.plan_id;
+
 
   const statusLabels = {
     active: 'Đang hoạt động',

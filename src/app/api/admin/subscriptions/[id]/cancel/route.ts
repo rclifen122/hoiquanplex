@@ -26,7 +26,7 @@ export async function POST(
             return NextResponse.json({ error: 'Invalid request', details: validation.error }, { status: 400 });
         }
 
-        const { action, refund_amount, reason } = validation.data;
+        const { action, refund_amount } = validation.data;
         const supabase = await createAdminClient();
 
         if (action === 'immediate') {

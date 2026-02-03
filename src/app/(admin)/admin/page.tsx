@@ -10,37 +10,46 @@ export const dynamic = 'force-dynamic';
 export default async function AdminDashboardPage() {
   const supabase = await createAdminClient();
 
-  // 1. Total Customers
-  const { count: totalCustomers } = await supabase
-    .from('customers')
-    .select('*', { count: 'exact', head: true });
+  // Parallelize independent queries
+  const [
+    { count: totalCustomers },
+    { count: activeSubscriptions },
+    { count: pendingPayments },
+    { data: recentPayments },
+    { data: recentCustomers }
+  ] = await Promise.all([
+    // 1. Total Customers
+    supabase
+      .from('customers')
+      .select('*', { count: 'exact', head: true }),
 
-  // 2. Active Subscriptions
-  const { count: activeSubscriptions } = await supabase
-    .from('subscriptions')
-    .select('*', { count: 'exact', head: true })
-    .eq('status', 'active');
+    // 2. Active Subscriptions
+    supabase
+      .from('subscriptions')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active'),
 
-  // 3. Pending Payments
-  const { count: pendingPayments } = await supabase
-    .from('payments')
-    .select('*', { count: 'exact', head: true })
-    .eq('status', 'pending');
+    // 3. Pending Payments
+    supabase
+      .from('payments')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending'),
 
-  // 4. Revenue Estimate & Recent Payments
-  const { data: recentPayments } = await supabase
-    .from('payments')
-    .select('*, customer:customers(full_name)')
-    .eq('status', 'completed')
-    .order('created_at', { ascending: false })
-    .limit(10);
+    // 4. Revenue Estimate & Recent Payments
+    supabase
+      .from('payments')
+      .select('*, customer:customers(full_name)')
+      .eq('status', 'completed')
+      .order('created_at', { ascending: false })
+      .limit(10),
 
-  // 5. Recent Customers
-  const { data: recentCustomers } = await supabase
-    .from('customers')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(5);
+    // 5. Recent Customers
+    supabase
+      .from('customers')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(5)
+  ]);
 
   const estimatedRevenue = (recentPayments || []).reduce((sum: number, p: { amount: number | null }) => sum + Number(p?.amount || 0), 0);
 

@@ -11,21 +11,27 @@ export default async function CustomerDashboardPage() {
   const subscription = await getActiveSubscription();
   const supabase = await createClient();
 
-  // Get recent payments
-  const { data: recentPayments } = await supabase
-    .from('payments')
-    .select('*')
-    .eq('customer_id', customer?.id)
-    .order('created_at', { ascending: false })
-    .limit(5);
+  // Parallelize payment queries
+  const [
+    { data: recentPayments },
+    { data: pendingPayments }
+  ] = await Promise.all([
+    // Get recent payments
+    supabase
+      .from('payments')
+      .select('*')
+      .eq('customer_id', customer?.id)
+      .order('created_at', { ascending: false })
+      .limit(5),
 
-  // Get pending payments
-  const { data: pendingPayments } = await supabase
-    .from('payments')
-    .select('*')
-    .eq('customer_id', customer?.id)
-    .eq('status', 'pending')
-    .order('created_at', { ascending: false });
+    // Get pending payments
+    supabase
+      .from('payments')
+      .select('*')
+      .eq('customer_id', customer?.id)
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false })
+  ]);
 
   const tierLabels = {
     free: 'Free Explorer',

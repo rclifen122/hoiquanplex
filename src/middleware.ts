@@ -1,8 +1,15 @@
-import { type NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  // Only update session (check auth) for protected routes
+  // This avoids unnecessary Supabase calls on public pages (landing, login, etc.)
+  if (request.nextUrl.pathname.startsWith('/admin') ||
+    request.nextUrl.pathname.startsWith('/customer')) {
+    return await updateSession(request);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
